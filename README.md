@@ -1,2 +1,3 @@
 # jICIG
-A Java library to help implementing IA inside imperfect but complete informations based games using decision tree algorithms
+
+A Java library that helps implement AIs that can compete within games based on **imperfect but complete information** using **decision tree algorithms**.
