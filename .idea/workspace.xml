@@ -4,7 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9ab4c8fc-b31e-4c6d-8870-e679e6ccb3a4" name="Changes" comment="" />
+    <list default="true" id="9ab4c8fc-b31e-4c6d-8870-e679e6ccb3a4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/algorithms/crm/CFRAlgorithm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/algorithms/mcts/ISMCTSAlgorithm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/algorithms/mcts/MCTSNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/algorithms/minimax/MinimaxAlgorithm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/algorithms/minimax/MinimaxAlphaBetaPruningAlgorithm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/core/AbstractGame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/core/Action.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/core/Agent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/core/Algorithm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/core/Game.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/core/GameState.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/core/InformationSet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/simulations/GameSimulator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/simulations/SimulationResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/simulations/Simulator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/org/example/Library.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/core/Library.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/org/example/LibraryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/LibraryTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,6 +52,14 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -42,6 +70,9 @@
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2g3ZUI2JAyeB57iZSEHQkdH6ORH" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -51,13 +82,14 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/bardy/Documents/GitHub/jICIG",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
