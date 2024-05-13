@@ -2,6 +2,10 @@ package com.lostrucos.jicig.core;
 
 import java.util.List;
 
+/**
+ * Questa interfaccia rappresenta uno stato del Gioco chiamato anche comodamente Nodo.
+ * Un giocatore attraverso un'Azione può raggiungere un altro Nodo partendo da un altro.
+ */
 public interface GameState {
 
     // Restituisce l'indice del giocatore di cui è il turno nello stato corrente.
@@ -10,8 +14,8 @@ public interface GameState {
     // Restituisce una lista degli indici dei giocatori coinvolti in questo stato di gioco.
     List<Integer> getPlayersInGame();
 
-    // Restituisce un valore booleano che indica se il giocatore specificato è ancora attivo (non eliminato) in questo stato di gioco.
-    boolean isPlayerActive(int player);
+    // Restituisce un valore booleano che indica se il giocatore specificato è ancora presente in gioco (non eliminato) in questo stato di gioco.
+    boolean isPlayerStillInGame(int player);
 
     // Restituisce l'insieme di informazioni (InformationSet) note al giocatore specificato in quello stato.
     InformationSet getInformationSet(int player);

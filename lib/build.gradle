@@ -19,6 +19,9 @@ dependencies {
     // Use JUnit test framework.
     testImplementation libs.junit
 
+    // Use Mockito to create mock objects for testing.
+    testImplementation "org.mockito:mockito-core:3.+"
+
     // This dependency is exported to consumers, that is to say found on their compile classpath.
     api libs.commons.math3
 
