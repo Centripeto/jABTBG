@@ -10,7 +10,7 @@ public abstract class AbstractGame implements Game {
     }
 
     @Override
-    public int getPlayerCount() {
+    public int getNumberOfPlayers() {
         return playerCount;
     }
 

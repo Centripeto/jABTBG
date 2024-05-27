@@ -3,9 +3,16 @@ package com.lostrucos.jicig.core;
 import java.util.List;
 
 /**
- * Questa interfaccia rappresenta l'insieme di informazioni conosciute da un giocatore in un dato stato di Gioco (o Nodo).
+ * Represents the information set for a player in a particular game state.
  */
 public interface InformationSet {
+
+    /**
+     * Returns a representation of the information set.
+     *
+     * @return a string representation of the information set.
+     */
+    String toString();
 
     // Restituisce l'indice del giocatore a cui appartiene questo insieme di informazioni.
     int getPlayerIndex();

@@ -4,7 +4,7 @@ import com.lostrucos.jicig.core.*;
 
 import java.util.List;
 
-public class MinimaxAlgorithm implements Algorithm {
+public class AlphaBetaPruningMinimaxAlgorithm implements Algorithm {
     private Game game;
     private Agent agent;
 
@@ -16,7 +16,7 @@ public class MinimaxAlgorithm implements Algorithm {
 
     @Override
     public Action chooseAction(GameState gameState) {
-        return minimaxDecision(gameState, agent.getPlayerIndex() % 2 == 0);
+        return alphaBetaMinimaxDecision(gameState, agent.getPlayerIndex() % 2 == 0);
     }
 
     @Override
@@ -24,32 +24,40 @@ public class MinimaxAlgorithm implements Algorithm {
         // Potrebbe essere implementato per aggiornare lo stato interno, se necessario.
     }
 
-    private Action minimaxDecision(GameState gameState, boolean isMaximizing) {
+    private Action alphaBetaMinimaxDecision(GameState gameState, boolean isMaximizing) {
         List<? extends Action> actions = game.getPlayerActions(agent.getPlayerIndex(), gameState);
         Action bestAction = null;
         double bestValue = isMaximizing ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY;
+        double alpha = Double.NEGATIVE_INFINITY;
+        double beta = Double.POSITIVE_INFINITY;
 
         for (Action action : actions) {
             GameState newState = action.applyAction(gameState);
-            double value = minMaxValue(newState, !isMaximizing);
+            double value = alphaBetaMinimax(newState, alpha, beta, !isMaximizing);
 
             if (isMaximizing) {
                 if (value > bestValue) {
                     bestValue = value;
                     bestAction = action;
                 }
+                alpha = Math.max(alpha, bestValue);
             } else {
                 if (value < bestValue) {
                     bestValue = value;
                     bestAction = action;
                 }
+                beta = Math.min(beta, bestValue);
+            }
+
+            if (beta <= alpha) {
+                break; // Potatura alfa-beta
             }
         }
 
         return bestAction;
     }
 
-    double minMaxValue(GameState gameState, boolean isMaximizing) {
+    double alphaBetaMinimax(GameState gameState, double alpha, double beta, boolean isMaximizing) {
         if (gameState.isTerminalNode()) {
             return gameState.getUtility(agent.getPlayerIndex());
         }
@@ -59,7 +67,17 @@ public class MinimaxAlgorithm implements Algorithm {
 
         for (Action action : actions) {
             GameState newState = action.applyAction(gameState);
-            value = isMaximizing ? Math.max(value, minMaxValue(newState, false)) : Math.min(value, minMaxValue(newState, true));
+            if (isMaximizing) {
+                value = Math.max(value, alphaBetaMinimax(newState, alpha, beta, false));
+                alpha = Math.max(alpha, value);
+            } else {
+                value = Math.min(value, alphaBetaMinimax(newState, alpha, beta, true));
+                beta = Math.min(beta, value);
+            }
+
+            if (beta <= alpha) {
+                break; // Potatura alfa-beta
+            }
         }
 
         return value;

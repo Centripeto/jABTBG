@@ -5,24 +5,24 @@ import com.lostrucos.jicig.core.*;
 import java.util.*;
 
 /**
- * Implements the Information Set Monte Carlo Tree Search (ISMCTS) algorithm for games with imperfect information.
+ * Implements the Monte Carlo Tree Search (MCTS) algorithm for games with perfect information.
  */
-public class ISMCTSAlgorithm implements Algorithm {
+public class MCTSAlgorithm implements Algorithm {
     private Game game;
     private Agent agent;
-    private int numSimulations;
-    private double explorationConstant;
-    private Map<InformationSet, MCTSNode> gameTree;
+    private final int numSimulations;
+    private final double explorationConstant;
+    private Map<GameState, MCTSNode> gameTree;
     private MCTSNode rootNode;
     private List<MCTSNode> selectedPath;
 
     /**
-     * Constructs a new ISMCTSAlgorithm.
+     * Constructs a new MCTSAlgorithm.
      *
      * @param numSimulations     the number of simulations to run.
      * @param explorationConstant the exploration constant used in UCB.
      */
-    public ISMCTSAlgorithm(int numSimulations, double explorationConstant) {
+    public MCTSAlgorithm(int numSimulations, double explorationConstant) {
         this.numSimulations = numSimulations;
         this.explorationConstant = explorationConstant;
         this.gameTree = new HashMap<>();
@@ -39,22 +39,20 @@ public class ISMCTSAlgorithm implements Algorithm {
     public void initialize(Game game, Agent agent) {
         this.game = game;
         this.agent = agent;
-        InformationSet initialInfoSet = game.getInitialState().getInformationSet(agent.getPlayerIndex());
-        gameTree.put(initialInfoSet, new MCTSNode(game.getInitialState(), null));
-        Optional<InformationSet> firstKey = gameTree.keySet().stream().findFirst();
-        rootNode = firstKey.map(gameTree::get).orElse(null);
+        gameTree.put(game.getInitialState(), new MCTSNode(game.getInitialState(), null));
+        Optional<GameState> firstKey = gameTree.keySet().stream().findFirst();
+        rootNode = firstKey.map(informationSet -> gameTree.get(informationSet)).orElse(null);
     }
 
     /**
-     * Chooses an action for the given state using the ISMCTS algorithm.
+     * Chooses an action for the given state using the MCTS algorithm.
      *
      * @param state the current game state.
      * @return the selected action.
      */
     @Override
     public Action chooseAction(GameState state) {
-        InformationSet infoSet = state.getInformationSet(agent.getPlayerIndex());
-        MCTSNode node = gameTree.get(infoSet);
+        MCTSNode node = gameTree.get(state);
         runSimulation(node);
         return node.selectBestAction();
     }
@@ -67,6 +65,7 @@ public class ISMCTSAlgorithm implements Algorithm {
      */
     @Override
     public void updateAfterAction(GameState state, Action action) {
+        // Update tree with new state
         InformationSet infoSet = state.getInformationSet(state.getCurrentPlayer());
         gameTree.keySet().removeIf(key -> !key.equals(infoSet));
     }
@@ -89,14 +88,15 @@ public class ISMCTSAlgorithm implements Algorithm {
      * @return the selected leaf node.
      */
     MCTSNode selectLeafNode(MCTSNode startingNode) {
-        if (startingNode.isTerminal()) {
+        // Per quelle estremamente rarissime volte che il gioco parte già finito ahahah
+        if(startingNode.isTerminal()) {
             return startingNode;
         }
 
         MCTSNode selectedNode = startingNode;
         selectedPath.add(selectedNode);
 
-        while (!selectedNode.isLeaf()) {
+        while(!selectedNode.isLeaf()) {
             selectedNode = selectedNode.selectChild(explorationConstant);
             selectedPath.add(selectedNode);
         }
@@ -148,7 +148,7 @@ public class ISMCTSAlgorithm implements Algorithm {
      *
      * @return the game tree.
      */
-    public Map<InformationSet, MCTSNode> getGameTree() {
+    public Map<GameState, MCTSNode> getGameTree() {
         return gameTree;
     }
 

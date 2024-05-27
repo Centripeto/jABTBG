@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class CFRAlgorithm implements Algorithm {
+public class CFRMAlgorithm implements Algorithm {
     private Game game;
     private Agent agent;
     private int iterations;
@@ -16,7 +16,7 @@ public class CFRAlgorithm implements Algorithm {
     private Map<InformationSet, Map<Action, Double>> regretTable;
     private Map<InformationSet, Map<Action, Double>> strategyTable;
 
-    public CFRAlgorithm(int iterations, double regretMatchingWeight) {
+    public CFRMAlgorithm(int iterations, double regretMatchingWeight) {
         this.iterations = iterations;
         this.regretMatchingWeight = regretMatchingWeight;
         this.random = new Random();
@@ -32,14 +32,14 @@ public class CFRAlgorithm implements Algorithm {
 
     /**
      * The method allows to return the appropriate player's Action for the given GameState
-     * chosen by its algorithm by calling the chooseAction method.
+     * chosen by the algorithm by calling the chooseAction method.
      *
      * @param state the current player's GameState.
      * @return      the chosen Action to take.
      */
     @Override
-    public Action getAction(GameState state) {
-        int playerIndex = state.getPlayerToMove();
+    public Action chooseAction(GameState state) {
+        int playerIndex = state.getCurrentPlayer();
         InformationSet infoSet = state.getInformationSet(playerIndex);
         Map<Action, Double> strategy = getStrategy(infoSet);
         return chooseAction(strategy);
@@ -76,7 +76,7 @@ public class CFRAlgorithm implements Algorithm {
      */
     public Map<Action, Double> initializeStrategy(InformationSet infoSet) {
         Map<Action, Double> strategy = new HashMap<>();
-        List<Action> actions = game.getPlayerActions(infoSet.getPlayerIndex(), infoSet.getPossibleStates().get(0));
+        List<? extends Action> actions = game.getPlayerActions(infoSet.getPlayerIndex(), infoSet.getPossibleStates().get(0));
         double weight = 1.0 / actions.size();
         for (Action action : actions) {
             strategy.put(action, weight);
@@ -136,7 +136,7 @@ public class CFRAlgorithm implements Algorithm {
             return weight * game.getUtility(state, agent.getPlayerIndex());
         }
 
-        int playerIndex = state.getPlayerToMove();
+        int playerIndex = state.getCurrentPlayer();
         InformationSet infoSet = state.getInformationSet(playerIndex);
         Map<Action, Double> strategy = getStrategy(infoSet);
         double utility = 0.0;

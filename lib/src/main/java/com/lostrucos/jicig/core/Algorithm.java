@@ -1,14 +1,39 @@
 package com.lostrucos.jicig.core;
 
+/**
+ * Represents an algorithm used by an agent to decide actions in the game.
+ */
 public interface Algorithm {
 
-    // Inizializza l'algoritmo con il gioco e l'agente specificati.
+    /**
+     * Initializes the algorithm with the given game and agent.
+     *
+     * @param game the game to be played.
+     * @param agent the agent using this algorithm.
+     */
     void initialize(Game game, Agent agent);
 
-    // Restituisce l'azione che l'algoritmo sceglierà di eseguire nello stato di gioco specificato.
-    Action getAction(GameState state);
+    /**
+     * Returns the action chosen by the algorithm for the given game state.
+     *
+     * @param gameState the current state of the game.
+     * @return the chosen action.
+     */
+    Action chooseAction(GameState gameState);
 
-    // Consente all'algoritmo di aggiornare il suo stato interno dopo che un'azione è stata eseguita nello stato di gioco specificato.
-    void updateAfterAction(GameState state, Action action);
+    /**
+     * Updates the algorithm's internal state after an action has been taken.
+     *
+     * @param gameState the new state of the game.
+     * @param action the action that was taken.
+     */
+    void updateAfterAction(GameState gameState, Action action);
+
+    /**
+     * Returns a representation of the algorithm.
+     *
+     * @return a string representation of the algorithm.
+     */
+    String toString();
 
 }

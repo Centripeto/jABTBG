@@ -1,8 +1,8 @@
 package com.lostrucos.jicig.algorithms.crm;
 
 import com.lostrucos.jicig.core.*;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.Arrays;
@@ -10,19 +10,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class CFRAlgorithmTest {
-    private Game game;
-    private Agent agent;
-    private CFRAlgorithm algorithm;
+public class CFRMAlgorithmTest {
+    private static Game game;
+    private static Agent agent;
+    private static CFRMAlgorithm algorithm;
 
-    @Before
-    public void setUp() {
+    @BeforeAll
+    public static void setUp() {
         game = Mockito.mock(Game.class);
         agent = Mockito.mock(Agent.class);
-        algorithm = new CFRAlgorithm(10000, 0.5);
+        algorithm = new CFRMAlgorithm(10000, 0.5);
         algorithm.initialize(game, agent);
     }
 
@@ -32,7 +32,9 @@ public class CFRAlgorithmTest {
         when(infoSet.getPlayerIndex()).thenReturn(0);
         when(infoSet.getPossibleStates()).thenReturn(Collections.singletonList(Mockito.mock(GameState.class)));
         List<Action> actions = Arrays.asList(Mockito.mock(Action.class), Mockito.mock(Action.class));
-        when(game.getPlayerActions(0, infoSet.getPossibleStates().get(0))).thenReturn(actions);
+
+        // Cast esplicito per risolvere il problema del tipo generico
+        when(game.getPlayerActions(eq(0), any(GameState.class))).thenReturn((List) actions);
 
         Map<Action, Double> strategy = algorithm.initializeStrategy(infoSet);
 
@@ -67,11 +69,11 @@ public class CFRAlgorithmTest {
         when(infoSet.getPossibleStates()).thenReturn(Collections.singletonList(initialState));
 
         // Configures the initial state mock to return the infoSet
-        when(initialState.getPlayerToMove()).thenReturn(0);
+        when(initialState.getCurrentPlayer()).thenReturn(0);
         when(initialState.getInformationSet(0)).thenReturn(infoSet);
 
         // Creates a spy of CFRAlgorithm
-        CFRAlgorithm algorithmSpy = Mockito.spy(new CFRAlgorithm(10000, 0.5));
+        CFRMAlgorithm algorithmSpy = Mockito.spy(new CFRMAlgorithm(10000, 0.5));
         algorithmSpy.initialize(game, agent);
 
         // Calls the trainIteration method on the spy

@@ -3,13 +3,46 @@ package com.lostrucos.jicig.core;
 import java.util.List;
 
 /**
- * Questa interfaccia rappresenta uno stato del Gioco chiamato anche comodamente Nodo.
- * Un giocatore attraverso un'Azione può raggiungere un altro Nodo partendo da un altro.
+ * Represents the state of the game at a particular point in time.
  */
 public interface GameState {
 
-    // Restituisce l'indice del giocatore di cui è il turno nello stato corrente.
-    int getPlayerToMove();
+    /**
+     * Returns the index of the current player.
+     *
+     * @return the index of the current player.
+     */
+    int getCurrentPlayer();
+
+    /**
+     * Checks if the current state is a terminal node.
+     *
+     * @return true if it is a terminal node, false otherwise.
+     */
+    boolean isTerminalNode();
+
+    /**
+     * Returns the utility value for a given player in this state.
+     *
+     * @param playerIndex the index of the player.
+     * @return the utility value.
+     */
+    double getUtility(int playerIndex);
+
+    /**
+     * Returns the information set (InformationSet) known to the specified playerIndex in that state.
+     *
+     * @param playerIndex the index of the player.
+     * @return the playerIndex's InformationSet.
+     */
+    InformationSet getInformationSet(int playerIndex);
+
+    /**
+     * Returns a representation of the state of the game.
+     *
+     * @return a string representation of the game state.
+     */
+    String toString();
 
     // Restituisce una lista degli indici dei giocatori coinvolti in questo stato di gioco.
     List<Integer> getPlayersInGame();
@@ -17,19 +50,12 @@ public interface GameState {
     // Restituisce un valore booleano che indica se il giocatore specificato è ancora presente in gioco (non eliminato) in questo stato di gioco.
     boolean isPlayerStillInGame(int player);
 
-    // Restituisce l'insieme di informazioni (InformationSet) note al giocatore specificato in quello stato.
-    InformationSet getInformationSet(int player);
-
-    // Restituisce un valore booleano che indica se lo stato corrente è un nodo terminale (ovvero un nodo con nessun figlio dove il gioco è concluso).
-    boolean isTerminalNode();
-
     // Restituisce un valore booleano che indica se lo stato corrente è un nodo di chance (ad esempio, se c'è un evento casuale come il lancio di un dado).
     boolean isChanceNode();
 
     // Se lo stato corrente è un nodo di chance, restituisce una lista di possibili stati successivi con le relative probabilità.
     List<GameState> getChanceOutcomes();
 
-    // Restituisce l'utilità (punteggio o ricompensa) per il giocatore specificato se lo stato corrente è uno stato terminale.
-    double getUtility(int player);
+
 
 }
