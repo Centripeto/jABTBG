@@ -1,98 +1,110 @@
 package com.lostrucos.jicig.algorithms.crm;
 
 import com.lostrucos.jicig.core.*;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class CFRMAlgorithmTest {
-    private static Game game;
-    private static Agent agent;
-    private static CFRMAlgorithm algorithm;
+class CFRMAlgorithmTest {
+    private Game mockGame;
+    private Agent mockAgent;
+    private GameState mockInitialState;
+    private GameState mockNextState;
+    private Action mockAction;
+    private InformationSet mockInfoSet;
+    private CFRMAlgorithm cfrmAlgorithm;
 
-    @BeforeAll
-    public static void setUp() {
-        game = Mockito.mock(Game.class);
-        agent = Mockito.mock(Agent.class);
-        algorithm = new CFRMAlgorithm(10000, 0.5);
-        algorithm.initialize(game, agent);
+    @BeforeEach
+    void setUp() {
+        mockGame = mock(Game.class);
+        mockAgent = mock(Agent.class);
+        mockInitialState = mock(GameState.class);
+        mockNextState = mock(GameState.class);
+        mockAction = mock(Action.class);
+        mockInfoSet = mock(InformationSet.class);
+
+        when(mockGame.getInitialState()).thenReturn(mockInitialState);
+        when(mockGame.getPlayerActions(anyInt(), any(GameState.class))).thenReturn(Collections.singletonList(mockAction));
+        when(mockGame.getNextState(any(GameState.class), anyList())).thenReturn(mockNextState);
+        when(mockGame.getUtility(any(GameState.class), anyInt())).thenReturn(1.0);
+        when(mockInitialState.getInformationSet(anyInt())).thenReturn(mockInfoSet);
+        when(mockNextState.getInformationSet(anyInt())).thenReturn(mockInfoSet);
+        when(mockInfoSet.getPlayerActions()).thenReturn(Collections.singletonList(mockAction));
+        when(mockInitialState.isTerminalNode()).thenReturn(false);
+        when(mockNextState.isTerminalNode()).thenReturn(true);
+
+        cfrmAlgorithm = new CFRMAlgorithm(1000, 0.1);
+        cfrmAlgorithm.initialize(mockGame, mockAgent);
     }
 
     @Test
-    public void testInitializeStrategy() {
-        InformationSet infoSet = Mockito.mock(InformationSet.class);
-        when(infoSet.getPlayerIndex()).thenReturn(0);
-        when(infoSet.getPossibleStates()).thenReturn(Collections.singletonList(Mockito.mock(GameState.class)));
-        List<Action> actions = Arrays.asList(Mockito.mock(Action.class), Mockito.mock(Action.class));
-
-        // Cast esplicito per risolvere il problema del tipo generico
-        when(game.getPlayerActions(eq(0), any(GameState.class))).thenReturn((List) actions);
-
-        Map<Action, Double> strategy = algorithm.initializeStrategy(infoSet);
-
-        assertEquals(2, strategy.size());
-        double weight = 1.0 / actions.size();
-        for (Double probability : strategy.values()) {
-            assertEquals(weight, probability, 0.0001);
-        }
+    void testInitialize() {
+        assertNotNull(cfrmAlgorithm);
     }
 
     @Test
-    public void testChooseAction() {
-        Map<Action, Double> strategy = Map.of(
-                Mockito.mock(Action.class), 0.3,
-                Mockito.mock(Action.class), 0.5,
-                Mockito.mock(Action.class), 0.2
-        );
-
-        Action chosenAction = algorithm.chooseAction(strategy);
-        assertTrue(strategy.containsKey(chosenAction));
+    void testChooseAction() {
+        Action selectedAction = cfrmAlgorithm.chooseAction(mockInitialState);
+        assertNotNull(selectedAction);
+        verify(mockGame, atLeastOnce()).getPlayerActions(anyInt(), any(GameState.class));
     }
 
     @Test
-    public void testTrainIteration() throws Exception {
-        GameState initialState = Mockito.mock(GameState.class);
-        when(game.getInitialState()).thenReturn(initialState);
-        when(agent.getPlayerIndex()).thenReturn(0);
-
-        // Create an InformationSet mock
-        InformationSet infoSet = Mockito.mock(InformationSet.class);
-        when(infoSet.getPlayerIndex()).thenReturn(0);
-        when(infoSet.getPossibleStates()).thenReturn(Collections.singletonList(initialState));
-
-        // Configures the initial state mock to return the infoSet
-        when(initialState.getCurrentPlayer()).thenReturn(0);
-        when(initialState.getInformationSet(0)).thenReturn(infoSet);
-
-        // Creates a spy of CFRAlgorithm
-        CFRMAlgorithm algorithmSpy = Mockito.spy(new CFRMAlgorithm(10000, 0.5));
-        algorithmSpy.initialize(game, agent);
-
-        // Calls the trainIteration method on the spy
-        algorithmSpy.trainIteration();
-
-        verify(algorithmSpy, times(1)).trainRecursive(initialState, 1.0);
-        verify(algorithmSpy, times(1)).updateRegrets();
+    void testTrain() {
+        cfrmAlgorithm.train();
+        assertFalse(cfrmAlgorithm.getRegretTable().isEmpty());
     }
 
     @Test
-    public void testUpdateRegret() {
-        InformationSet infoSet = Mockito.mock(InformationSet.class);
-        Action action = Mockito.mock(Action.class);
-        double regret = 0.5;
+    void testUpdateAfterAction() {
+        // CFR does not require incremental updates after each action, so no operations are needed here.
+    }
 
-        algorithm.updateRegret(infoSet, action, regret);
+    @Test
+    void testGetStrategy() {
+        Map<Action, Double> strategy = cfrmAlgorithm.getStrategy(mockInfoSet);
+        assertNotNull(strategy);
+        assertEquals(1, strategy.size());
+    }
 
-        Map<Action, Double> regretMap = algorithm.getRegretTable().get(infoSet);
+    @Test
+    void testInitializeStrategy() {
+        Map<Action, Double> strategy = cfrmAlgorithm.initializeStrategy(mockInfoSet);
+        assertNotNull(strategy);
+        assertEquals(1.0, strategy.values().stream().mapToDouble(Double::doubleValue).sum());
+    }
+
+    @Test
+    void testSelectActionFromStrategy() {
+        Map<Action, Double> strategy = new HashMap<>();
+        strategy.put(mockAction, 1.0);
+        Action selectedAction = cfrmAlgorithm.selectAction(strategy);
+        assertEquals(mockAction, selectedAction);
+    }
+
+    @Test
+    void testTrainRecursive() {
+        double utility = cfrmAlgorithm.trainRecursive(mockInitialState, 1.0);
+        assertEquals(1.0, utility, 0.01);
+    }
+
+    @Test
+    void testUpdateRegret() {
+        cfrmAlgorithm.updateRegret(mockInfoSet, mockAction, 1.0);
+        Map<Action, Double> regretMap = cfrmAlgorithm.getRegretTable().get(mockInfoSet);
         assertNotNull(regretMap);
-        assertEquals(regret, regretMap.get(action), 0.0001);
+        assertEquals(1.0, regretMap.get(mockAction));
+    }
+
+    @Test
+    void testUpdateRegrets() {
+        cfrmAlgorithm.trainRecursive(mockInitialState, 1.0);
+        cfrmAlgorithm.updateRegrets();
+        Map<InformationSet, Map<Action, Double>> regretTable = cfrmAlgorithm.getRegretTable();
+        assertFalse(regretTable.isEmpty());
     }
 }

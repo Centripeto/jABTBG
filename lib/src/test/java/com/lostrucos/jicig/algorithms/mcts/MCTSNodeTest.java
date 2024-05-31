@@ -17,8 +17,8 @@ public class MCTSNodeTest {
     @BeforeEach
     public void setUp() {
         mockState = mock(GameState.class);
-        MCTSNode fatherNode = mock(MCTSNode.class);
-        mockNode = new MCTSNode(mockState, fatherNode);
+        MCTSNode mockParentNode = mock(MCTSNode.class);
+        mockNode = new MCTSNode(mockState, mockParentNode);
     }
 
     @Test

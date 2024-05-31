@@ -55,7 +55,7 @@ public class ISMCTSAlgorithm implements Algorithm {
     public Action chooseAction(GameState state) {
         InformationSet infoSet = state.getInformationSet(agent.getPlayerIndex());
         MCTSNode node = gameTree.get(infoSet);
-        runSimulation(node);
+        runIteration(node);
         return node.selectBestAction();
     }
 
@@ -76,7 +76,7 @@ public class ISMCTSAlgorithm implements Algorithm {
      *
      * @param startingNode the starting node for the simulation.
      */
-    void runSimulation(MCTSNode startingNode) {
+    void runIteration(MCTSNode startingNode) {
         expandGameTree(selectLeafNode(startingNode));
         randomPlayout(selectedPath.get(selectedPath.size() -1));
         backpropagation();

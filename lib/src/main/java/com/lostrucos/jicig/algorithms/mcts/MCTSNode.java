@@ -161,4 +161,16 @@ public class MCTSNode {
     public void setLeaf(boolean leaf) {
         isLeaf = leaf;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MCTSNode mctsNode)) return false;
+        return Objects.equals(state, mctsNode.state) && Objects.equals(parentNode, mctsNode.parentNode) && Objects.equals(childNodes, mctsNode.childNodes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(state, parentNode, childNodes);
+    }
 }

@@ -2,24 +2,29 @@ package com.lostrucos.jicig.algorithms.crm;
 
 import com.lostrucos.jicig.core.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
+/**
+ * Implementation of the Counterfactual Regret Minimization (CFR) Algorithm.
+ * This algorithm is used for finding approximate Nash equilibria in games of imperfect information.
+ */
 public class CFRMAlgorithm implements Algorithm {
     private Game game;
     private Agent agent;
-    private int iterations;
-    private double regretMatchingWeight;
-    private Random random;
+    private final int numIterations;
+    private final double regretMatchingWeight;
     private Map<InformationSet, Map<Action, Double>> regretTable;
     private Map<InformationSet, Map<Action, Double>> strategyTable;
 
-    public CFRMAlgorithm(int iterations, double regretMatchingWeight) {
-        this.iterations = iterations;
+    /**
+     * Constructs a new CFRMAlgorithm.
+     *
+     * @param numIterations         the number of iterations for the training process.
+     * @param regretMatchingWeight  the weight used in the regret matching process.
+     */
+    public CFRMAlgorithm(int numIterations, double regretMatchingWeight) {
+        this.numIterations = numIterations;
         this.regretMatchingWeight = regretMatchingWeight;
-        this.random = new Random();
         this.regretTable = new HashMap<>();
         this.strategyTable = new HashMap<>();
     }
@@ -31,33 +36,31 @@ public class CFRMAlgorithm implements Algorithm {
     }
 
     /**
-     * The method allows to return the appropriate player's Action for the given GameState
-     * chosen by the algorithm by calling the chooseAction method.
+     * Returns the appropriate action for the given game state chosen by the algorithm.
      *
-     * @param state the current player's GameState.
-     * @return      the chosen Action to take.
+     * @param state the current game state.
+     * @return the chosen action.
      */
     @Override
     public Action chooseAction(GameState state) {
-        int playerIndex = state.getCurrentPlayer();
-        InformationSet infoSet = state.getInformationSet(playerIndex);
+        InformationSet infoSet = state.getInformationSet(state.getCurrentPlayer());
         Map<Action, Double> strategy = getStrategy(infoSet);
-        return chooseAction(strategy);
+        return selectAction(strategy);
     }
 
     @Override
     public void updateAfterAction(GameState state, Action action) {
-        // Nessuna operazione necessaria
+        // No operation needed
     }
 
     /**
-     * The method allows obtaining the strategy of a given player.
-     * If not already drafted, the method will automatically initialize one.
+     * Obtains the strategy for a given player.
+     * If not already drafted, initializes a new strategy.
      *
-     * @param   infoSet the player's current InformationSet.
-     * @return          the player's current strategy.
+     * @param infoSet the player's current information set.
+     * @return the player's current strategy.
      */
-    private Map<Action, Double> getStrategy(InformationSet infoSet) {
+    Map<Action, Double> getStrategy(InformationSet infoSet) {
         Map<Action, Double> strategy = strategyTable.get(infoSet);
         if (strategy == null) {
             strategy = initializeStrategy(infoSet);
@@ -67,16 +70,18 @@ public class CFRMAlgorithm implements Algorithm {
     }
 
     /**
-     * The method allows to initialize the strategy of a given player.
-     * The starting strategy consists of a list of Actions initialized with an equal value between them
-     * where the sum of their total weight is equal to 1.
+     * Initializes the strategy for a given player.
+     * The starting strategy consists of a list of actions initialized with equal values summing to 1.
      *
-     * @param   infoSet the player's current InformationSet.
-     * @return          the player's first strategy.
+     * @param infoSet the player's current information set.
+     * @return the initial strategy.
      */
-    public Map<Action, Double> initializeStrategy(InformationSet infoSet) {
+    Map<Action, Double> initializeStrategy(InformationSet infoSet) {
+        //Optional<GameState> firstKey = gameTree.keySet().stream().findFirst();
+        //rootNode = firstKey.map(informationSet -> gameTree.get(informationSet)).orElse(null);
+
         Map<Action, Double> strategy = new HashMap<>();
-        List<? extends Action> actions = game.getPlayerActions(infoSet.getPlayerIndex(), infoSet.getPossibleStates().get(0));
+        List<Action> actions = game.getPlayerActions(infoSet.getPlayerIndex(), infoSet.getPossibleStates().get(0));
         double weight = 1.0 / actions.size();
         for (Action action : actions) {
             strategy.put(action, weight);
@@ -85,15 +90,13 @@ public class CFRMAlgorithm implements Algorithm {
     }
 
     /**
-     * The method allows to choose the best Action within the player's strategy.
-     * An Action may be present more than once within the player's strategy.
-     * This will help the algorithm to choose that Action with greater probability.
-     * If no action is chosen, the method throws an IllegalStateException exception.
+     * Chooses an action within the player's strategy based on the probabilities.
      *
      * @param strategy the player's current strategy.
-     * @return         the best Action chosen from the strategy.
+     * @return the chosen action.
      */
-    public Action chooseAction(Map<Action, Double> strategy) {
+    Action selectAction(Map<Action, Double> strategy) {
+        Random random = new Random();
         double randomValue = random.nextDouble();
         double cumulativeProbability = 0.0;
         for (Map.Entry<Action, Double> entry : strategy.entrySet()) {
@@ -106,33 +109,32 @@ public class CFRMAlgorithm implements Algorithm {
     }
 
     /**
-     * This method allows to start training the algorithm by performing a number of iterations given by the amount stored in the variable iterations.
+     * Starts training the algorithm by performing the specified number of iterations.
      */
     public void train() {
-        for (int i = 0; i < iterations; i++) {
+        for (int i = 0; i < numIterations; i++) {
             trainIteration();
         }
     }
 
     /**
-     * This method allows to train the algorithm starting from the beginning of the game by performing a singular iteration.
-     * The method trains the algorithm calling two other methods: trainRecursive and updateRegrets.
+     * Trains the algorithm starting from the initial state by performing a single iteration.
      */
-    public void trainIteration() {
+    private void trainIteration() {
         GameState initialState = game.getInitialState();
         trainRecursive(initialState, 1.0);
         updateRegrets();
     }
 
     /**
-     * The method allows to perform recursion on the game tree, computes utilities, and updates the regret for each InformationSet and Action.
+     * Recursively performs the training on the game tree, computing utilities and updating regrets.
      *
-     * @param state  the current player's GameState.
-     * @param weight the given value for the weight.
-     * @return       the utility value needed to calculate the new regret.
+     * @param state  the current game state.
+     * @param weight the weight for the current path.
+     * @return the computed utility.
      */
-    public double trainRecursive(GameState state, double weight) {
-        if (state.isTerminalNode()) {
+    double trainRecursive(GameState state, double weight) {
+        if (game.isTerminal(state)) {
             return weight * game.getUtility(state, agent.getPlayerIndex());
         }
 
@@ -144,7 +146,7 @@ public class CFRMAlgorithm implements Algorithm {
         for (Map.Entry<Action, Double> entry : strategy.entrySet()) {
             Action action = entry.getKey();
             double probability = entry.getValue();
-            GameState nextState = action.applyAction(state);
+            GameState nextState = game.getNextState(state, List.of(action));
             double nextUtility = trainRecursive(nextState, weight * probability);
             double regret = nextUtility - utility;
             updateRegret(infoSet, action, regret);
@@ -155,22 +157,21 @@ public class CFRMAlgorithm implements Algorithm {
     }
 
     /**
-     * The method allows to update the regret for a specific action in an InformationSet.
+     * Updates the regret for a specific action in an information set.
      *
-     * @param infoSet the player's current InformationSet.
-     * @param action  the Action that will be taken by the player.
-     * @param regret  the new amount of regret used to update the current one.
+     * @param infoSet the player's current information set.
+     * @param action  the action taken by the player.
+     * @param regret  the regret value to update.
      */
-    public void updateRegret(InformationSet infoSet, Action action, double regret) {
+    void updateRegret(InformationSet infoSet, Action action, double regret) {
         Map<Action, Double> regretMap = regretTable.computeIfAbsent(infoSet, k -> new HashMap<>());
         regretMap.put(action, regretMap.getOrDefault(action, 0.0) + regret);
     }
 
     /**
-     * Updates the strategies for all information sets by calculating the sum of regrets for each information set,
-     * then updates the probabilities of actions based on regret and weight.
+     * Updates the strategies for all information sets based on regret and weight.
      */
-    public void updateRegrets() {
+    void updateRegrets() {
         for (Map.Entry<InformationSet, Map<Action, Double>> entry : regretTable.entrySet()) {
             InformationSet infoSet = entry.getKey();
             Map<Action, Double> regretMap = entry.getValue();
@@ -187,6 +188,11 @@ public class CFRMAlgorithm implements Algorithm {
         }
     }
 
+    /**
+     * Returns the regret table used by the algorithm.
+     *
+     * @return the regret table.
+     */
     public Map<InformationSet, Map<Action, Double>> getRegretTable() {
         return regretTable;
     }

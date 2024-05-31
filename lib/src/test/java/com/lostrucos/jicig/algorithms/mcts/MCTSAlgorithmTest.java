@@ -15,9 +15,12 @@ public class MCTSAlgorithmTest {
     private Game mockGame;
     private Agent mockAgent;
     private GameState mockInitialState;
-    private GameState mockNextState;
+    private GameState mockMiddleState;
+    private GameState mockTerminalState;
     private Action mockAction;
+    private Action mockAction2;
     private InformationSet mockInfoSet;
+    private InformationSet mockInfoSet2;
     private MCTSAlgorithm mctsAlgorithm;
 
     @BeforeEach
@@ -25,18 +28,26 @@ public class MCTSAlgorithmTest {
         mockGame = mock(Game.class);
         mockAgent = mock(Agent.class);
         mockInitialState = mock(GameState.class);
-        mockNextState = mock(GameState.class);
+        mockMiddleState = mock(GameState.class);
+        mockTerminalState = mock(GameState.class);
         mockAction = mock(Action.class);
+        mockAction2 = mock(Action.class);
         mockInfoSet = mock(InformationSet.class);
+        mockInfoSet2 = mock(InformationSet.class);
 
         when(mockGame.getInitialState()).thenReturn(mockInitialState);
         when(mockInitialState.getInformationSet(anyInt())).thenReturn(mockInfoSet);
         when(mockInfoSet.getPlayerActions()).thenReturn(Collections.singletonList(mockAction));
-        when(mockNextState.getInformationSet(anyInt())).thenReturn(mockInfoSet);
-        when(mockAction.applyAction(any(GameState.class))).thenReturn(mockNextState);
+        when(mockAction.applyAction(any(GameState.class))).thenReturn(mockMiddleState);
+
+        when(mockMiddleState.getInformationSet(anyInt())).thenReturn(mockInfoSet2);
+        when(mockInfoSet2.getPlayerActions()).thenReturn(Collections.singletonList(mockAction2));
+        when(mockAction.applyAction(any(GameState.class))).thenReturn(mockTerminalState);
+
         when(mockGame.getUtility(any(GameState.class), anyInt())).thenReturn(1.0);
         when(mockInitialState.isTerminalNode()).thenReturn(false);
-        when(mockNextState.isTerminalNode()).thenReturn(true);
+        when(mockMiddleState.isTerminalNode()).thenReturn(false);
+        when(mockTerminalState.isTerminalNode()).thenReturn(true);
 
         mctsAlgorithm = new MCTSAlgorithm(100, Math.sqrt(2));
         mctsAlgorithm.initialize(mockGame, mockAgent);
@@ -62,27 +73,30 @@ public class MCTSAlgorithmTest {
     @Test
     void testUpdateAfterAction() {
         InformationSet mockInfoSet = mock(InformationSet.class);
-        when(mockNextState.getInformationSet(anyInt())).thenReturn(mockInfoSet);
+        when(mockTerminalState.getInformationSet(anyInt())).thenReturn(mockInfoSet);
 
-        mctsAlgorithm.updateAfterAction(mockNextState, mockAction);
+        mctsAlgorithm.updateAfterAction(mockTerminalState, mockAction);
         ArgumentCaptor<GameState> stateCaptor = ArgumentCaptor.forClass(GameState.class);
-        verify(mockNextState, times(1)).getInformationSet(anyInt());
+        verify(mockTerminalState, times(1)).getInformationSet(anyInt());
     }
 
     @Test
-    void testRunSimulation() {
+    void testRunIteration() {
         MCTSNode rootNode = mctsAlgorithm.getRootNode();
-        mctsAlgorithm.runSimulation(rootNode);
-        List<MCTSNode> selectedPath = mctsAlgorithm.getSelectedPath();
-        assertTrue(selectedPath.isEmpty());
+        assertEquals(1, mctsAlgorithm.getGameTree().size());
+        mctsAlgorithm.runIteration(rootNode);
+        assertEquals(2, mctsAlgorithm.getGameTree().size());
     }
 
     @Test
     void testSelectLeafNode() {
         MCTSNode rootNode = mctsAlgorithm.getRootNode();
-        MCTSNode leafNode = mctsAlgorithm.selectLeafNode(rootNode);
+        MCTSNode middleNode = new MCTSNode(mockMiddleState, rootNode);
+        MCTSNode leafNode = new MCTSNode(mockTerminalState, middleNode);
+
         assertNotNull(leafNode);
-        assertEquals(rootNode, leafNode);
+        assertNotEquals(rootNode, leafNode);
+        assertEquals(leafNode, mctsAlgorithm.selectLeafNode(rootNode));
     }
 
     @Test
@@ -94,21 +108,30 @@ public class MCTSAlgorithmTest {
     }
 
     @Test
-    void testRandomPlayout() {
+    void testSimulation() {
         MCTSNode rootNode = mctsAlgorithm.getRootNode();
+        assertEquals(1, mctsAlgorithm.getGameTree().size());
         mctsAlgorithm.expandGameTree(rootNode);
-        mctsAlgorithm.randomPlayout(rootNode);
-        List<MCTSNode> selectedPath = mctsAlgorithm.getSelectedPath();
-        assertFalse(selectedPath.isEmpty());
+        assertEquals(2, mctsAlgorithm.getGameTree().size());
+        mctsAlgorithm.simulation(rootNode);
+        assertEquals(2, mctsAlgorithm.getGameTree().size());
     }
 
     @Test
-    void testBackpropagation() {
+    void testBackpropagationStep() {
         MCTSNode rootNode = mctsAlgorithm.getRootNode();
-        mctsAlgorithm.expandGameTree(rootNode);
-        mctsAlgorithm.randomPlayout(rootNode);
-        mctsAlgorithm.backpropagation();
-        List<MCTSNode> selectedPath = mctsAlgorithm.getSelectedPath();
-        assertTrue(selectedPath.isEmpty());
+        MCTSNode leafNode = mctsAlgorithm.expandGameTree(rootNode);
+        MCTSNode terminalNode = new MCTSNode(mockTerminalState, leafNode);
+
+        assertEquals(0, rootNode.getVisitCount());
+        assertEquals(0, leafNode.getVisitCount());
+        assertEquals(0, terminalNode.getVisitCount());
+
+        mctsAlgorithm.simulation(leafNode);
+        mctsAlgorithm.backpropagationStep(terminalNode);
+
+        assertEquals(1, terminalNode.getVisitCount());
+        assertEquals(1, leafNode.getVisitCount());
+        assertEquals(0, rootNode.getVisitCount());
     }
 }

@@ -5,33 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9ab4c8fc-b31e-4c6d-8870-e679e6ccb3a4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/algorithms/mcts/MCTSAlgorithm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/algorithms/minimax/AlphaBetaPruningMinimaxAlgorithm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/algorithms/minimax/Minimax.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jicig/algorithms/mcts/ISMCTSAlgorithmTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jicig/algorithms/mcts/MCTSAlgorithmTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jicig/algorithms/mcts/MCTSNodeTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jicig/algorithms/minimax/AlphaBetaPruningMinimaxAlgorithmTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jicig/algorithms/minimax/MinimaxAlgorithmTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jicig/algorithms/minimax/MinimaxTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/lib/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/algorithms/crm/CFRAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/algorithms/crm/CFRMAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/algorithms/crm/CFRMAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/algorithms/crm/CFRMAlgorithm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/algorithms/mcts/ISMCTSAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/algorithms/mcts/ISMCTSAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/algorithms/mcts/MCTSAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/algorithms/mcts/MCTSAlgorithm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/algorithms/mcts/MCTSNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/algorithms/mcts/MCTSNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/algorithms/minimax/MinimaxAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/algorithms/minimax/MinimaxAlgorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/algorithms/minimax/MinimaxAlphaBetaPruningAlgorithm.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/core/AbstractGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/core/AbstractGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/core/Action.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/core/Action.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/core/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/core/Agent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/core/Algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/core/Algorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/core/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/core/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/core/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/core/GameState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/core/InformationSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/core/InformationSet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/core/Library.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/LibraryTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jicig/algorithms/crm/CFRAlgorithmTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jicig/algorithms/crm/CFRMAlgorithmTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jicig/algorithms/crm/CFRMAlgorithmTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jicig/algorithms/crm/CFRMAlgorithmTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jicig/algorithms/mcts/ISMCTSAlgorithmTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jicig/algorithms/mcts/ISMCTSAlgorithmTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jicig/algorithms/mcts/MCTSAlgorithmTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jicig/algorithms/mcts/MCTSAlgorithmTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jicig/algorithms/mcts/MCTSNodeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jicig/algorithms/mcts/MCTSNodeTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,8 +63,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="JUnit4 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -120,15 +102,20 @@
     "Gradle.jICIG [testClasses].executor": "Run",
     "Gradle.jICIG [test].executor": "Run",
     "JUnit.CFRMAlgorithmTest.executor": "Run",
+    "JUnit.CFRMAlgorithmTest.testChooseAction.executor": "Run",
+    "JUnit.CFRMAlgorithmTest.testGetStrategy.executor": "Debug",
     "JUnit.CFRMAlgorithmTest.testInitializeStrategy.executor": "Run",
     "JUnit.ISMCTSAlgorithmTest.executor": "Run",
     "JUnit.MCTSAlgorithmTest.executor": "Run",
     "JUnit.MCTSAlgorithmTest.testBackpropagation.executor": "Run",
+    "JUnit.MCTSAlgorithmTest.testBackpropagationStep.executor": "Run",
     "JUnit.MCTSAlgorithmTest.testChooseAction.executor": "Run",
     "JUnit.MCTSAlgorithmTest.testExpandGameTree.executor": "Debug",
     "JUnit.MCTSAlgorithmTest.testGetAction.executor": "Debug",
     "JUnit.MCTSAlgorithmTest.testInitialize.executor": "Run",
+    "JUnit.MCTSAlgorithmTest.testRunIteration.executor": "Run",
     "JUnit.MCTSAlgorithmTest.testRunSimulation.executor": "Run",
+    "JUnit.MCTSAlgorithmTest.testSelectLeafNode.executor": "Debug",
     "JUnit.MCTSAlgorithmTest.testUpdateAfterAction.executor": "Debug",
     "JUnit.MCTSNodeTest.executor": "Run",
     "JUnit.MCTSNodeTest.testIsLeaf.executor": "Debug",
@@ -162,7 +149,7 @@
       <recent name="com.lostrucos.jicig.algorithms.crm" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.MCTSNodeTest.testSelectBestAction">
+  <component name="RunManager" selected="JUnit.MCTSAlgorithmTest">
     <configuration name="jICIG [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -185,7 +172,7 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="ISMCTSAlgorithmTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MCTSAlgorithmTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="jICIG.lib.test" />
       <extension name="coverage">
         <pattern>
@@ -194,13 +181,13 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.lostrucos.jicig.algorithms.mcts" />
-      <option name="MAIN_CLASS_NAME" value="com.lostrucos.jicig.algorithms.mcts.ISMCTSAlgorithmTest" />
+      <option name="MAIN_CLASS_NAME" value="com.lostrucos.jicig.algorithms.mcts.MCTSAlgorithmTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MCTSNodeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MCTSAlgorithmTest.testBackpropagationStep" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="jICIG.lib.test" />
       <extension name="coverage">
         <pattern>
@@ -209,29 +196,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.lostrucos.jicig.algorithms.mcts" />
-      <option name="MAIN_CLASS_NAME" value="com.lostrucos.jicig.algorithms.mcts.MCTSNodeTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MCTSNodeTest.testSelectBestAction" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="jICIG.lib.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.lostrucos.jicig.algorithms.mcts.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.lostrucos.jicig.algorithms.mcts" />
-      <option name="MAIN_CLASS_NAME" value="com.lostrucos.jicig.algorithms.mcts.MCTSNodeTest" />
-      <option name="METHOD_NAME" value="testSelectBestAction" />
+      <option name="MAIN_CLASS_NAME" value="com.lostrucos.jicig.algorithms.mcts.MCTSAlgorithmTest" />
+      <option name="METHOD_NAME" value="testBackpropagationStep" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MCTSNodeTest.testSelectChild" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MCTSAlgorithmTest.testRunIteration" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="jICIG.lib.test" />
       <extension name="coverage">
         <pattern>
@@ -240,8 +212,24 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.lostrucos.jicig.algorithms.mcts" />
-      <option name="MAIN_CLASS_NAME" value="com.lostrucos.jicig.algorithms.mcts.MCTSNodeTest" />
-      <option name="METHOD_NAME" value="testSelectChild" />
+      <option name="MAIN_CLASS_NAME" value="com.lostrucos.jicig.algorithms.mcts.MCTSAlgorithmTest" />
+      <option name="METHOD_NAME" value="testRunIteration" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MCTSAlgorithmTest.testSelectLeafNode" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="jICIG.lib.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.lostrucos.jicig.algorithms.mcts.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.lostrucos.jicig.algorithms.mcts" />
+      <option name="MAIN_CLASS_NAME" value="com.lostrucos.jicig.algorithms.mcts.MCTSAlgorithmTest" />
+      <option name="METHOD_NAME" value="testSelectLeafNode" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -249,11 +237,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.MCTSNodeTest.testSelectBestAction" />
-        <item itemvalue="JUnit.MCTSNodeTest.testSelectChild" />
-        <item itemvalue="JUnit.MCTSNodeTest" />
+        <item itemvalue="JUnit.MCTSAlgorithmTest.testSelectLeafNode" />
+        <item itemvalue="JUnit.MCTSAlgorithmTest" />
         <item itemvalue="Gradle.jICIG [clean]" />
-        <item itemvalue="JUnit.ISMCTSAlgorithmTest" />
+        <item itemvalue="JUnit.MCTSAlgorithmTest.testBackpropagationStep" />
+        <item itemvalue="JUnit.MCTSAlgorithmTest.testRunIteration" />
       </list>
     </recent_temporary>
   </component>
@@ -278,5 +266,21 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jicig/algorithms/crm/CFRMAlgorithm.java</url>
+          <line>83</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jicig/algorithms/mcts/MCTSAlgorithmTest.java</url>
+          <line>98</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

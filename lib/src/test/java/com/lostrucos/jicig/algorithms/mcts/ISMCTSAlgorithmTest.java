@@ -71,9 +71,9 @@ public class ISMCTSAlgorithmTest {
     }
 
     @Test
-    void testRunSimulation() {
+    void testRunIteration() {
         MCTSNode rootNode = ismctsAlgorithm.getRootNode();
-        ismctsAlgorithm.runSimulation(rootNode);
+        ismctsAlgorithm.runIteration(rootNode);
         List<MCTSNode> selectedPath = ismctsAlgorithm.getSelectedPath();
         assertTrue(selectedPath.isEmpty());
     }
