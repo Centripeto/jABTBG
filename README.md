@@ -1,4 +1,4 @@
-# jABTBG
+# jABTBG :muscle:
 ## Java Agent Behaviour for Turn Based Games
 
 A Java library that helps implement intelligent agents that can compete within **turn based games** using **decision tree algorithms** to choose the best action.
