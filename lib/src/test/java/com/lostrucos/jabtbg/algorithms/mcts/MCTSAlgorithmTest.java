@@ -103,6 +103,18 @@ public class MCTSAlgorithmTest {
     }
 
     @Test
+    void testSelectLeafNodeIfStartingFromTerminalNode() {
+        MCTSNode rootNode = mctsAlgorithm.getRootNode();
+        MCTSNode middleNode = rootNode.getOrCreateChild(mockAction);
+        MCTSNode leafNode = middleNode.getOrCreateChild(mockAction2);
+
+        MCTSNode selectedNode = mctsAlgorithm.selectLeafNode(leafNode);
+
+        assertNotNull(leafNode);
+        assertTrue(leafNode.equals(selectedNode));
+    }
+
+    @Test
     void testExpandGameTree() {
         MCTSNode rootNode = mctsAlgorithm.getRootNode();
         mctsAlgorithm.expandGameTree(rootNode);
@@ -121,7 +133,7 @@ public class MCTSAlgorithmTest {
     }
 
     @Test
-    void testBackpropagationStep() {
+    void testBackpropagation() {
         MCTSNode rootNode = mctsAlgorithm.getRootNode();
         MCTSNode leafNode = mctsAlgorithm.expandGameTree(rootNode);
         MCTSNode terminalNode = new MCTSNode(mockTerminalState, leafNode);
@@ -131,7 +143,7 @@ public class MCTSAlgorithmTest {
         assertEquals(0, terminalNode.getVisitCount());
 
         mctsAlgorithm.simulation(leafNode);
-        mctsAlgorithm.backpropagationStep(terminalNode);
+        mctsAlgorithm.backpropagation(terminalNode);
 
         assertEquals(1, terminalNode.getVisitCount());
         assertEquals(1, leafNode.getVisitCount());

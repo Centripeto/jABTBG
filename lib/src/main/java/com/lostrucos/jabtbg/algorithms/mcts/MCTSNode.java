@@ -109,9 +109,9 @@ public class MCTSNode {
     }
 
     /**
-     * Gets the parent node.
+     * Gets the parent of this node.
      *
-     * @return the parent node.
+     * @return the parent node of this node.
      */
     public MCTSNode getParentNode() {
         return parentNode;

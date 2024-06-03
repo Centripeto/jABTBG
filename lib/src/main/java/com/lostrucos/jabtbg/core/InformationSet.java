@@ -3,7 +3,7 @@ package com.lostrucos.jabtbg.core;
 import java.util.List;
 
 /**
- * Represents the information set for a player in a particular game state.
+ * Represents the information set for a player in a particular point of the game.
  */
 public interface InformationSet {
 
@@ -14,10 +14,23 @@ public interface InformationSet {
      */
     String toString();
 
-    // Restituisce l'indice del giocatore a cui appartiene questo insieme di informazioni.
+    /**
+     * @return The index of the player to which this set of information belongs.
+     */
     int getPlayerIndex();
 
-    // Restituisce una lista di stati di gioco possibili coerenti con le informazioni di cui dispone il giocatore.
+    /**
+     * Determines a pseudo-state for this information set.
+     *
+     * @return a pseudo-state.
+     */
+    GameState determinePseudoState();
+
+    /**
+     * Returns a list of possible game states consistent with the information available to the player.
+     *
+     * @return the list of possible game states.
+     */
     List<GameState> getPossibleStates();
 
     // Restituisce una lista delle azioni valide per il giocatore associato a questo insieme di informazioni.

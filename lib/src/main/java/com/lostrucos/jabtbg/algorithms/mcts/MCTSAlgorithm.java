@@ -10,7 +10,7 @@ import java.util.*;
 public class MCTSAlgorithm implements Algorithm {
     private Game game;
     private Agent agent;
-    private final int numSimulations;
+    private final int numIterations;
     private final double explorationConstant;
     private Map<GameState, MCTSNode> gameTree;
     private MCTSNode rootNode;
@@ -18,11 +18,11 @@ public class MCTSAlgorithm implements Algorithm {
     /**
      * Constructs a new MCTSAlgorithm.
      *
-     * @param numSimulations the number of simulations to run.
+     * @param numIterations the number of simulations to run.
      * @param explorationConstant the exploration constant used in UCB.
      */
-    public MCTSAlgorithm(int numSimulations, double explorationConstant) {
-        this.numSimulations = numSimulations;
+    public MCTSAlgorithm(int numIterations, double explorationConstant) {
+        this.numIterations = numIterations;
         this.explorationConstant = explorationConstant;
         this.gameTree = new HashMap<>();
     }
@@ -53,7 +53,7 @@ public class MCTSAlgorithm implements Algorithm {
     @Override
     public Action chooseAction(GameState state) {
         MCTSNode node = gameTree.get(state);
-        for (int i = 0; i < numSimulations; i++) {
+        for (int i = 0; i < numIterations; i++) {
             runIteration(node);
         }
         return node.selectBestAction();
@@ -73,7 +73,7 @@ public class MCTSAlgorithm implements Algorithm {
     }
 
     /**
-     * Runs one complete iteration starting from the given starting node (selection, expansion, simulation and backpropagation).
+     * Runs one complete iteration starting from the given starting node (selection, expansion, simulation and back-propagation).
      *
      * @param startingNode the starting node for the iteration.
      */
@@ -89,11 +89,11 @@ public class MCTSAlgorithm implements Algorithm {
      * @return the selected leaf node.
      */
     MCTSNode selectLeafNode(MCTSNode startingNode) {
-        if(startingNode.isTerminal()) {
-            return startingNode;
-        }
-
         MCTSNode selectedNode = startingNode;
+
+        if(selectedNode.isTerminal()) {
+            backpropagation(selectedNode);
+        }
 
         while(!selectedNode.isLeaf()) {
             selectedNode = selectedNode.selectChild(explorationConstant);
@@ -132,7 +132,7 @@ public class MCTSAlgorithm implements Algorithm {
     }
 
     /**
-     * Performs a simulation from the given starting node then calls a backpropagation for every simulation node created.
+     * Performs a simulation from the given starting node then calls a back-propagation for every simulation node created.
      *
      * @param startingNode the startingNode to start the playout from.
      */
@@ -145,20 +145,19 @@ public class MCTSAlgorithm implements Algorithm {
             Action randomAction = actionList.get(randomIndex);
             terminalNode = terminalNode.getOrCreateChild(randomAction);
         }
-        do {
-            terminalNode = backpropagationStep(terminalNode);
-        } while(!terminalNode.equals(rootNode));
+        backpropagation(terminalNode);
     }
 
     /**
-     * Performs one step of backpropagation to update the node's visits and score with the results of the simulation.
+     * Performs back-propagation to update the visits and score of all nodes with the results obtained from the simulation until it reaches the root node.
      *
-     * @param startingNode the starting node to perform the backpropagation step.
-     * @return the parent node of the backpropagated node.
+     * @param startingNode the starting node to perform the back-propagation step.
      */
-    MCTSNode backpropagationStep(MCTSNode startingNode) {
-        startingNode.updateNodeStats(game.getUtility(startingNode.getState(), agent.getPlayerIndex()));
-        return startingNode.getParentNode();
+    void backpropagation(MCTSNode startingNode) {
+        do {
+            startingNode.updateNodeStats(game.getUtility(startingNode.getState(), agent.getPlayerIndex()));
+            startingNode = startingNode.getParentNode();
+        } while (startingNode != null);
     }
 
     /**
