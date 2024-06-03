@@ -10,26 +10,27 @@ import java.util.*;
 public class ISMCTSAlgorithm implements Algorithm {
     private Game game;
     private Agent agent;
-    private int numSimulations;
-    private double explorationConstant;
-    private Map<InformationSet, MCTSNode> gameTree;
-    private MCTSNode rootNode;
+    private final int numIterations;
+    private final int maxPseudoStatePerNode;
+    private final double explorationConstant;
+    private Map<InformationSet, ISMCTSNode> gameTree;
+    private ISMCTSNode rootNode;
 
     /**
      * Constructs a new ISMCTSAlgorithm.
      *
-     * @param numSimulations the number of simulations to run.
+     * @param numIterations the number of simulations to run.
      * @param explorationConstant the exploration constant used in UCB.
      */
-    public ISMCTSAlgorithm(int numSimulations, double explorationConstant) {
-        this.numSimulations = numSimulations;
+    public ISMCTSAlgorithm(int numIterations, int maxPseudoStatePerNode, double explorationConstant) {
+        this.numIterations = numIterations;
+        this.maxPseudoStatePerNode = maxPseudoStatePerNode;
         this.explorationConstant = explorationConstant;
-        this.gameTree = new HashMap<>();
     }
 
     /**
      * Initializes the algorithm with the given game and agent.
-     * Initializes also the game tree and its root node.
+     * Initializes also its root node with the initial information set.
      *
      * @param game the game to be played.
      * @param agent the agent playing the game.
@@ -39,24 +40,23 @@ public class ISMCTSAlgorithm implements Algorithm {
         this.game = game;
         this.agent = agent;
         InformationSet initialInfoSet = game.getInitialState().getInformationSet(agent.getPlayerIndex());
-        gameTree.put(initialInfoSet, new MCTSNode(game.getInitialState(), null));
-        Optional<InformationSet> firstKey = gameTree.keySet().stream().findFirst();
-        rootNode = firstKey.map(gameTree::get).orElse(null);
+        this.rootNode = new ISMCTSNode(initialInfoSet, null);
     }
 
     /**
-     * It chooses the best action to take from the considered state using the MCTS algorithm
-     * iterated as many times as was indicated during the instantiation of the MCTS algorithm.
+     * It chooses the best action to take from the considered state using the ISMCTS algorithm
+     * iterated as many times as was indicated during the instantiation of the ISMCTS algorithm.
      *
      * @param state the current game state.
      * @return the selected action.
      */
     @Override
     public Action chooseAction(GameState state) {
-        InformationSet infoSet = state.getInformationSet(agent.getPlayerIndex());
-        MCTSNode node = gameTree.get(infoSet);
-        for (int i = 0; i < numSimulations; i++) {
-            runIteration(node);
+        InformationSet rootInfoSet = state.getInformationSet(agent.getPlayerIndex());
+        ISMCTSNode node = gameTree.get(rootInfoSet);
+        for (int i = 0; i < numIterations; i++) {
+            GameState pseudoState = node.getOrCreatePseudoState(maxPseudoStatePerNode);
+            runIteration(pseudoState);
         }
         return node.selectBestAction();
     }
@@ -69,106 +69,94 @@ public class ISMCTSAlgorithm implements Algorithm {
      */
     @Override
     public void updateAfterAction(GameState state, Action action) {
-        InformationSet infoSet = state.getInformationSet(state.getCurrentPlayer());
-        gameTree.keySet().removeIf(key -> !key.equals(infoSet));
-    }
-
-    /**
-     * Runs one complete iteration starting from the given starting node (selection, expansion, simulation and backpropagation).
-     *
-     * @param startingNode the starting node for the iteration.
-     */
-    void runIteration(MCTSNode startingNode) {
-        MCTSNode leafNode = expandGameTree(selectLeafNode(startingNode));
-        simulation(leafNode);
-    }
-
-    /**
-     * Selects a leaf node from the given starting node.
-     *
-     * @param startingNode the starting node.
-     * @return the selected leaf node.
-     */
-    MCTSNode selectLeafNode(MCTSNode startingNode) {
-        if(startingNode.isTerminal()) {
-            return startingNode;
+        InformationSet newInfoSet = state.getInformationSet(agent.getPlayerIndex());
+        ISMCTSNode childNode = rootNode.getChildNodes().get(action);
+        if (childNode != null && childNode.getInformationSet().equals(newInfoSet)) {
+            rootNode = childNode;
+            rootNode.setParentNode(null);
+        } else {
+            rootNode = new ISMCTSNode(newInfoSet, null);
         }
-
-        MCTSNode selectedNode = startingNode;
-
-        while(!selectedNode.isLeaf()) {
-            selectedNode = selectedNode.selectChild(explorationConstant);
-        }
-
-        return selectedNode;
     }
 
     /**
-     * If the leaf node isn't a terminal node, expands the game tree one time from the given leaf node.
+     * Runs one complete iteration starting from the given pseudo-state (selection, expansion, simulation, and back-propagation).
      *
-     * @param leafNode the leaf node to expand.
+     * @param pseudoState the starting pseudo-state for the iteration.
+     */
+    void runIteration(GameState pseudoState) {
+        ISMCTSNode selectedNode = selectNode(rootNode, pseudoState);
+        ISMCTSNode expandedNode = expandNode(selectedNode);
+        double reward = defaultPolicy(expandedNode.getInformationSet().determinePseudoState());
+        backpropagation(expandedNode, reward);
+    }
+
+    /**
+     * Selection phase.
+     *
+     * @param node the current node.
+     * @param state the current state.
+     * @return the node selected for simulation.
+     */
+    ISMCTSNode selectNode(ISMCTSNode node, GameState state) {
+        while (!state.isTerminalNode() && node.getChildNodes().size() == node.getInformationSet().getPlayerActions().size()) {
+            node = node.selectChild(explorationConstant);
+            state = node.getInformationSet().determinePseudoState();
+        }
+        return node;
+    }
+
+    /**
+     * Expands the game tree from the given node for every action available.
+     *
+     * @param node the node to expand.
      * @return the expanded node.
      */
-    MCTSNode expandGameTree(MCTSNode leafNode) {
-        if(leafNode.isTerminal()) return leafNode;
-
-        // 3 metodi diversi per ricavare la lista delle azioni disponibili per il nodo foglia selezionato per l'espansione
-
-        //List<Action> actionList = game.getPlayerActions(agent.getPlayerIndex(),leafNode.getState());
-        //List<Action> actionList = leafNode.getState().getAvailableActions(agent.getPlayerIndex());
-        InformationSet infoSet = leafNode.getState().getInformationSet(agent.getPlayerIndex());
-        List<Action> actionList = infoSet.getPlayerActions();
-
-        // nel caso in cui il nodo venga creato grazie ad una azione presa a random dalla lista
-        //Random random = new Random();
-        //int randomIndex = random.nextInt(actionList.size());
-        //Action action = actionList.get(randomIndex);
-
-        // nel caso in cui il nodo venga creato grazie alla prima azione disponibile della lista
-        Action action = actionList.get(0);
-
-        MCTSNode expandedNode = leafNode.getOrCreateChild(action);
-        gameTree.put(expandedNode.getState().getInformationSet(agent.getPlayerIndex()), expandedNode);
-        return expandedNode;
-    }
-
-    /**
-     * Performs a simulation from the given starting node then calls a backpropagation for every simulation node created.
-     *
-     * @param startingNode the startingNode to start the playout from.
-     */
-    void simulation(MCTSNode startingNode) {
-        MCTSNode terminalNode = startingNode;
-        while(!terminalNode.isTerminal()) {
-            List<Action> actionList = new ArrayList<>(startingNode.getChildNodes().keySet());
-            Random random = new Random();
-            int randomIndex = random.nextInt(actionList.size());
-            Action randomAction = actionList.get(randomIndex);
-            terminalNode = terminalNode.getOrCreateChild(randomAction);
+    ISMCTSNode expandNode(ISMCTSNode node) {
+        for (Action action : node.getInformationSet().getPlayerActions()) {
+            if (!node.getChildNodes().containsKey(action)) {
+                return node.getOrCreateChild(action);
+            }
         }
-        do {
-            terminalNode = backpropagationStep(terminalNode);
-        } while(!terminalNode.equals(rootNode));
+        return node;  // Return the same node if all actions have been tried
     }
 
     /**
-     * Performs one step of backpropagation to update the node's visits and score with the results of the simulation.
+     * Simulation phase.
      *
-     * @param startingNode the starting node to perform the backpropagation step.
-     * @return the parent node of the backpropagated node.
+     * @param state the starting state for the playout.
+     * @return the reward from the playout.
      */
-    MCTSNode backpropagationStep(MCTSNode startingNode) {
-        startingNode.updateNodeStats(game.getUtility(startingNode.getState(), agent.getPlayerIndex()));
-        return startingNode.getParentNode();
+    double defaultPolicy(GameState state) {
+        while (!state.isTerminalNode()) {
+            state = randomNextState(state);
+        }
+        return state.getUtility(state.getCurrentPlayer());
     }
 
     /**
-     * Gets the game tree.
+     * Selects a random next state from the given state.
      *
-     * @return the game tree.
+     * @param state the current state.
+     * @return the next state.
      */
-    public Map<InformationSet, MCTSNode> getGameTree() {
-        return gameTree;
+    GameState randomNextState(GameState state) {
+        List<Action> actions = state.getInformationSet(state.getCurrentPlayer()).getPlayerActions();
+        Action action = actions.get(new Random().nextInt(actions.size()));
+        return action.applyAction(state);
+    }
+
+    /**
+     * Back-propagation phase.
+     *
+     * @param node the starting node for the back-propagation step.
+     * @param reward the reward to propagate.
+     */
+    void backpropagation(ISMCTSNode node, double reward) {
+        while (node != null) {
+            node.updateNodeStats(reward);
+            node = node.getParentNode();
+        }
     }
 
     /**
@@ -176,7 +164,7 @@ public class ISMCTSAlgorithm implements Algorithm {
      *
      * @return the root node.
      */
-    public MCTSNode getRootNode() {
+    public ISMCTSNode getRootNode() {
         return rootNode;
     }
 }

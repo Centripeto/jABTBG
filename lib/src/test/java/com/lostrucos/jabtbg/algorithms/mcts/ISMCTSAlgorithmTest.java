@@ -3,6 +3,111 @@ package com.lostrucos.jabtbg.algorithms.mcts;
 import com.lostrucos.jabtbg.core.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Collections;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+public class ISMCTSAlgorithmTest {
+    private Game mockGame;
+    private GameState mockInitialState;
+    private Action mockAction;
+    private InformationSet mockInitialInfoSet;
+    private ISMCTSAlgorithm ismctsAlgorithm;
+
+    @BeforeEach
+    public void setUp() {
+        mockGame = mock(Game.class);
+        Agent mockAgent = mock(Agent.class);
+        mockInitialState = mock(GameState.class);
+        mockAction = mock(Action.class);
+        mockInitialInfoSet = mock(InformationSet.class);
+
+        when(mockGame.getInitialState()).thenReturn(mockInitialState);
+        when(mockAgent.getPlayerIndex()).thenReturn(0); // Assuming the agent's player index is 0
+        when(mockInitialState.getInformationSet(anyInt())).thenReturn(mockInitialInfoSet);
+        when(mockInitialInfoSet.getPlayerActions()).thenReturn(Collections.singletonList(mockAction));
+        when(mockInitialInfoSet.determinePseudoState()).thenReturn(mockInitialState);
+
+        ismctsAlgorithm = new ISMCTSAlgorithm(1000, 10, Math.sqrt(2));
+        ismctsAlgorithm.initialize(mockGame, mockAgent);
+    }
+
+    @Test
+    void testInitialize() {
+        assertNotNull(ismctsAlgorithm.getRootNode());
+        assertEquals(mockInitialState, mockGame.getInitialState());
+        assertEquals(mockInitialInfoSet, ismctsAlgorithm.getRootNode().getInformationSet());
+    }
+
+    @Test
+    public void testChooseAction() {
+        Action selectedAction = ismctsAlgorithm.chooseAction(mockInitialState);
+
+        assertNotNull(selectedAction);
+
+        verify(mockInitialState, atLeastOnce()).getInformationSet(0);
+        verify(mockInitialInfoSet, atLeastOnce()).getPlayerActions();
+    }
+
+    @Test
+    public void testUpdateAfterAction() {
+        ismctsAlgorithm.updateAfterAction(mockInitialState, mockAction);
+        // Verify that the root node was updated correctly.
+        assertNotNull(ismctsAlgorithm.chooseAction(mockInitialState));
+    }
+
+    @Test
+    public void testRunIteration() {
+        ismctsAlgorithm.runIteration(mockInitialState);
+        // Check if the rootNode has been updated correctly.
+        assertNotNull(ismctsAlgorithm.chooseAction(mockInitialState));
+    }
+
+    @Test
+    public void testSelectNode() {
+        ISMCTSNode rootNode = mock(ISMCTSNode.class);
+        when(rootNode.getInformationSet()).thenReturn(mockInitialInfoSet);
+
+        ISMCTSNode selectedNode = ismctsAlgorithm.selectNode(rootNode, mockInitialState);
+        assertNotNull(selectedNode);
+        assertTrue(selectedNode.equals(rootNode));
+    }
+
+    @Test
+    public void testExpandNode() {
+        ISMCTSNode rootNode = mock(ISMCTSNode.class);
+        when(rootNode.getInformationSet()).thenReturn(mockInitialInfoSet);
+
+        ISMCTSNode expandedNode = ismctsAlgorithm.expandNode(rootNode);
+        assertNotNull(expandedNode);
+        assertTrue(!expandedNode.equals(rootNode));
+    }
+
+    @Test
+    public void testDefaultPolicy() {
+        when(mockInitialState.isTerminalNode()).thenReturn(true);
+        when(mockInitialState.getUtility(anyInt())).thenReturn(1.0);
+        double reward = ismctsAlgorithm.defaultPolicy(mockInitialState);
+        assertEquals(1.0, reward);
+    }
+
+    @Test
+    public void testRandomNextState() {
+        when(mockInitialState.isTerminalNode()).thenReturn(false);
+        when(mockAction.applyAction(mockInitialState)).thenReturn(mockInitialState);
+        GameState nextState = ismctsAlgorithm.randomNextState(mockInitialState);
+        assertNotNull(nextState);
+    }
+}
+
+/**
+package com.lostrucos.jabtbg.algorithms.mcts;
+
+import com.lostrucos.jabtbg.core.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
 import java.util.*;
@@ -113,3 +218,4 @@ public class ISMCTSAlgorithmTest {
         assertTrue(selectedPath.isEmpty());
     }
 }
+ */
