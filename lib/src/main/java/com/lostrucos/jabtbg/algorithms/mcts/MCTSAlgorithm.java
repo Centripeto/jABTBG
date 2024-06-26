@@ -114,9 +114,9 @@ public class MCTSAlgorithm implements Algorithm {
         // 3 metodi diversi per ricavare la lista delle azioni disponibili per il nodo foglia selezionato per l'espansione
 
         //List<Action> actionList = game.getPlayerActions(agent.getPlayerIndex(),leafNode.getState());
-        //List<Action> actionList = leafNode.getState().getAvailableActions(agent.getPlayerIndex());
-        InformationSet infoSet = leafNode.getState().getInformationSet(agent.getPlayerIndex());
-        List<Action> actionList = infoSet.getPlayerActions();
+        List<Action> actionList = leafNode.getState().getAvailableActions(agent.getPlayerIndex());
+        //InformationSet infoSet = leafNode.getState().getInformationSet(agent.getPlayerIndex());
+        //List<Action> actionList = infoSet.getPlayerActions();
 
         // nel caso in cui il nodo venga creato grazie ad una azione presa a random dalla lista
         //Random random = new Random();

@@ -5,16 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9ab4c8fc-b31e-4c6d-8870-e679e6ccb3a4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/mcts/ISMCTSNode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jabtbg/algorithms/mcts/ISMCTSNodeTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/mcts/ISMCTSAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/mcts/ISMCTSAlgorithm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/mcts/MCTSAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/mcts/MCTSAlgorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/mcts/MCTSNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/mcts/MCTSNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/GameState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/InformationSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/InformationSet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jabtbg/algorithms/mcts/ISMCTSAlgorithmTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jabtbg/algorithms/mcts/ISMCTSAlgorithmTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jabtbg/algorithms/mcts/MCTSAlgorithmTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jabtbg/algorithms/mcts/MCTSAlgorithmTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,66 +80,67 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Downloaded.Files.Path.Enabled": "false",
-    "Gradle.Build jABTBG.executor": "Run",
-    "Gradle.Build jICIG.executor": "Run",
-    "Gradle.CFRMAlgorithmTest.executor": "Run",
-    "Gradle.Download Sources.executor": "Run",
-    "Gradle.ISMCTSAlgorithmTest.executor": "Run",
-    "Gradle.ISMCTSAlgorithmTest.testGetAction.executor": "Run",
-    "Gradle.jICIG [assemble].executor": "Run",
-    "Gradle.jICIG [buildDependents].executor": "Run",
-    "Gradle.jICIG [build].executor": "Run",
-    "Gradle.jICIG [check].executor": "Run",
-    "Gradle.jICIG [clean].executor": "Run",
-    "Gradle.jICIG [testClasses].executor": "Run",
-    "Gradle.jICIG [test].executor": "Run",
-    "JUnit.CFRMAlgorithmTest.executor": "Run",
-    "JUnit.CFRMAlgorithmTest.testChooseAction.executor": "Run",
-    "JUnit.CFRMAlgorithmTest.testGetStrategy.executor": "Debug",
-    "JUnit.CFRMAlgorithmTest.testInitializeStrategy.executor": "Run",
-    "JUnit.ISMCTSAlgorithmTest.executor": "Run",
-    "JUnit.ISMCTSAlgorithmTest.testChooseAction.executor": "Run",
-    "JUnit.ISMCTSAlgorithmTest.testExpandNode.executor": "Debug",
-    "JUnit.ISMCTSAlgorithmTest.testInitialize.executor": "Run",
-    "JUnit.ISMCTSNodeTest.executor": "Run",
-    "JUnit.MCTSAlgorithmTest.executor": "Run",
-    "JUnit.MCTSAlgorithmTest.testBackpropagation.executor": "Run",
-    "JUnit.MCTSAlgorithmTest.testBackpropagationStep.executor": "Run",
-    "JUnit.MCTSAlgorithmTest.testChooseAction.executor": "Run",
-    "JUnit.MCTSAlgorithmTest.testExpandGameTree.executor": "Debug",
-    "JUnit.MCTSAlgorithmTest.testGetAction.executor": "Debug",
-    "JUnit.MCTSAlgorithmTest.testInitialize.executor": "Run",
-    "JUnit.MCTSAlgorithmTest.testRunIteration.executor": "Run",
-    "JUnit.MCTSAlgorithmTest.testRunSimulation.executor": "Run",
-    "JUnit.MCTSAlgorithmTest.testSelectLeafNode.executor": "Run",
-    "JUnit.MCTSAlgorithmTest.testUpdateAfterAction.executor": "Debug",
-    "JUnit.MCTSNodeTest.executor": "Run",
-    "JUnit.MCTSNodeTest.testIsLeaf.executor": "Debug",
-    "JUnit.MCTSNodeTest.testIsTerminal.executor": "Run",
-    "JUnit.MCTSNodeTest.testSelectBestAction.executor": "Run",
-    "JUnit.MCTSNodeTest.testSelectChild.executor": "Run",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4": "",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "First-iteration",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/bardy/Documents/GitHub/jABTBG",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "editor.preferences.fonts.default"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Gradle.Build jABTBG.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Build jICIG.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.CFRMAlgorithmTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ISMCTSAlgorithmTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ISMCTSAlgorithmTest.testGetAction.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.jABTBG [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.jICIG [assemble].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.jICIG [buildDependents].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.jICIG [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.jICIG [check].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.jICIG [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.jICIG [testClasses].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.jICIG [test].executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CFRMAlgorithmTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CFRMAlgorithmTest.testChooseAction.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CFRMAlgorithmTest.testGetStrategy.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.CFRMAlgorithmTest.testInitializeStrategy.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ISMCTSAlgorithmTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ISMCTSAlgorithmTest.testChooseAction.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ISMCTSAlgorithmTest.testExpandNode.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.ISMCTSAlgorithmTest.testInitialize.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ISMCTSNodeTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MCTSAlgorithmTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MCTSAlgorithmTest.testBackpropagation.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MCTSAlgorithmTest.testBackpropagationStep.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MCTSAlgorithmTest.testChooseAction.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MCTSAlgorithmTest.testExpandGameTree.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.MCTSAlgorithmTest.testGetAction.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.MCTSAlgorithmTest.testInitialize.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MCTSAlgorithmTest.testRunIteration.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MCTSAlgorithmTest.testRunSimulation.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MCTSAlgorithmTest.testSelectLeafNode.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MCTSAlgorithmTest.testUpdateAfterAction.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.MCTSNodeTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MCTSNodeTest.testIsLeaf.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.MCTSNodeTest.testIsTerminal.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MCTSNodeTest.testSelectBestAction.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MCTSNodeTest.testSelectChild.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4&quot;: &quot;&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;test-branch&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/bardy/Documents/GitHub/jABTBG&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -158,7 +152,29 @@
       <recent name="com.lostrucos.jicig.algorithms.crm" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.jICIG [clean]">
+  <component name="RunManager" selected="Gradle.jABTBG [build]">
+    <configuration name="jABTBG [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="jICIG [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -212,22 +228,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ISMCTSAlgorithmTest.testInitialize" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="jABTBG.lib.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.lostrucos.jabtbg.algorithms.mcts.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.lostrucos.jabtbg.algorithms.mcts" />
-      <option name="MAIN_CLASS_NAME" value="com.lostrucos.jabtbg.algorithms.mcts.ISMCTSAlgorithmTest" />
-      <option name="METHOD_NAME" value="testInitialize" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="ISMCTSNodeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="jABTBG.lib.test" />
       <extension name="coverage">
@@ -245,11 +245,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.jABTBG [build]" />
         <item itemvalue="Gradle.jICIG [clean]" />
         <item itemvalue="JUnit.ISMCTSNodeTest" />
         <item itemvalue="JUnit.ISMCTSAlgorithmTest" />
         <item itemvalue="JUnit.ISMCTSAlgorithmTest.testChooseAction" />
-        <item itemvalue="JUnit.ISMCTSAlgorithmTest.testInitialize" />
       </list>
     </recent_temporary>
   </component>
