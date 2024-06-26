@@ -15,6 +15,16 @@ public class MinimaxAlgorithm implements Algorithm {
     }
 
     @Override
+    public void initialize(GameState state) {
+
+    }
+
+    @Override
+    public void reset() {
+
+    }
+
+    @Override
     public Action chooseAction(GameState gameState) {
         return minimaxDecision(gameState, agent.getPlayerIndex() % 2 == 0);
     }
@@ -22,6 +32,11 @@ public class MinimaxAlgorithm implements Algorithm {
     @Override
     public void updateAfterAction(GameState gameState, Action action) {
         // Potrebbe essere implementato per aggiornare lo stato interno, se necessario.
+    }
+
+    @Override
+    public GameState applyPseudoAction(GameState state, Action action) {
+        return null;
     }
 
     private Action minimaxDecision(GameState gameState, boolean isMaximizing) {

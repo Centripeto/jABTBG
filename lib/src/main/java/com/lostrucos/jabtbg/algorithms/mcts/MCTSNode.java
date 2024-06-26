@@ -8,10 +8,10 @@ import java.util.*;
 /**
  * Represents a node in the Monte Carlo Tree Search (MCTS) algorithm.
  */
-public class MCTSNode {
-    private GameState state;
-    private MCTSNode parentNode;
-    private Map<Action, MCTSNode> childNodes;
+public class MCTSNode<E extends Action,T extends GameState<E>> {
+    private T state;
+    private MCTSNode<E,T> parentNode;
+    private Map<E, MCTSNode<E,T>> childNodes;
     private double totalReward;
     private int visitCount;
     private boolean isLeaf;
@@ -22,7 +22,7 @@ public class MCTSNode {
      * @param state  the game state represented by this node.
      * @param parentNode the parent node.
      */
-    public MCTSNode(GameState state, MCTSNode parentNode) {
+    public MCTSNode(T state, MCTSNode<E,T> parentNode) {
         this.state = state;
         this.parentNode = parentNode;
         this.childNodes = new HashMap<>();
@@ -47,18 +47,18 @@ public class MCTSNode {
      * @return the child node.
      */
     public MCTSNode getOrCreateChild(Action action) {
-        MCTSNode childNode = childNodes.computeIfAbsent(action, a -> new MCTSNode(action.applyAction(this.state), this));
+        MCTSNode childNode = childNodes.computeIfAbsent((E)action, a -> new MCTSNode(action.applyAction(this.state), this));
         isLeaf = false;
         return childNode;
     }
-
+//TODO:Devo rivedere questo metodo, perché la parte di creazione di un nuovo nodo, prevede un nuovo stato, e non è action a doverlo fornire
     /**
      * Selects the best action from this node using UCB.
      *
      * @param explorationConstant the exploration constant.
      * @return the selected action.
      */
-    public MCTSNode selectChild(double explorationConstant) {
+    public MCTSNode<E,T> selectChild(double explorationConstant) {
         return childNodes.values().stream()
                 .max(Comparator.comparing(node -> node.getUCBValue(explorationConstant)))
                 .orElseThrow(IllegalStateException::new);
@@ -82,7 +82,7 @@ public class MCTSNode {
      *
      * @return the best action.
      */
-    public Action selectBestAction() {
+    public E selectBestAction() {
         return childNodes.entrySet().stream()
                 .max(Comparator.comparingDouble(entry -> entry.getValue().totalReward / entry.getValue().visitCount))
                 .map(Map.Entry::getKey)
@@ -104,7 +104,7 @@ public class MCTSNode {
      *
      * @return the game state.
      */
-    public GameState getState() {
+    public T getState() {
         return state;
     }
 
@@ -113,7 +113,7 @@ public class MCTSNode {
      *
      * @return the parent node of this node.
      */
-    public MCTSNode getParentNode() {
+    public MCTSNode<E,T> getParentNode() {
         return parentNode;
     }
 
@@ -122,7 +122,7 @@ public class MCTSNode {
      *
      * @return a map of actions to child nodes.
      */
-    public Map<Action, MCTSNode> getChildNodes() {
+    public Map<E, MCTSNode<E,T>> getChildNodes() {
         return childNodes;
     }
 
@@ -172,5 +172,15 @@ public class MCTSNode {
     @Override
     public int hashCode() {
         return Objects.hash(state, parentNode, childNodes);
+    }
+
+    //Ci dice se un nodo è pienamente espanso
+    public boolean isFullyExpanded() {
+        int numOfAvailableActions = this.getState().getAvailableActions(getState().getCurrentPlayer()).size();
+        return numOfAvailableActions == this.getChildNodes().size();
+    }
+
+    public int numOfLegalActions(){
+        return this.getState().getAvailableActions(getState().getCurrentPlayer()).size();
     }
 }

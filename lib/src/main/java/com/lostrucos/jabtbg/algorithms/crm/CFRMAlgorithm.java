@@ -35,6 +35,16 @@ public class CFRMAlgorithm implements Algorithm {
         this.agent = agent;
     }
 
+    @Override
+    public void initialize(GameState state) {
+
+    }
+
+    @Override
+    public void reset() {
+
+    }
+
     /**
      * Returns the appropriate action for the given game state chosen by the algorithm.
      *
@@ -52,6 +62,12 @@ public class CFRMAlgorithm implements Algorithm {
     public void updateAfterAction(GameState state, Action action) {
         // No operation needed
     }
+
+    @Override
+    public GameState applyPseudoAction(GameState state, Action action) {
+        return null;
+    }
+
 
     /**
      * Obtains the strategy for a given player.

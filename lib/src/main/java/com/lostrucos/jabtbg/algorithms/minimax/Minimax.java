@@ -21,6 +21,16 @@ public class Minimax implements Algorithm {
         this.playerIndex = agent.getPlayerIndex();
     }
 
+    @Override
+    public void initialize(GameState state) {
+
+    }
+
+    @Override
+    public void reset() {
+
+    }
+
     //
     @Override
     public Action chooseAction(GameState gameState) {
@@ -46,6 +56,12 @@ public class Minimax implements Algorithm {
     public void updateAfterAction(GameState gameState, Action action) {
         // Non è necessario aggiornare lo stato interno in questo caso
     }
+
+    @Override
+    public GameState applyPseudoAction(GameState state, Action action) {
+        return null;
+    }
+
 
     private double minimaxRecursive(InformationSet infoSet, int depth) {
         if (infoSet.isTerminal() || depth == maxDepth) {

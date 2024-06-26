@@ -44,6 +44,16 @@ public class ISMCTSAlgorithm implements Algorithm {
         rootNode = firstKey.map(gameTree::get).orElse(null);
     }
 
+    @Override
+    public void initialize(GameState state) {
+
+    }
+
+    @Override
+    public void reset() {
+
+    }
+
     /**
      * It chooses the best action to take from the considered state using the MCTS algorithm
      * iterated as many times as was indicated during the instantiation of the MCTS algorithm.
@@ -72,6 +82,12 @@ public class ISMCTSAlgorithm implements Algorithm {
         InformationSet infoSet = state.getInformationSet(state.getCurrentPlayer());
         gameTree.keySet().removeIf(key -> !key.equals(infoSet));
     }
+
+    @Override
+    public GameState applyPseudoAction(GameState state, Action action) {
+        return null;
+    }
+
 
     /**
      * Runs one complete iteration starting from the given starting node (selection, expansion, simulation and backpropagation).
