@@ -27,6 +27,7 @@ public class TrisAction implements Action {
         return player;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -39,9 +40,11 @@ public class TrisAction implements Action {
         return Objects.hash(x, y, player);
     }
 
-    //Non serve ora
+
+    //Da levare
     @Override
     public GameState applyAction(GameState gameState) {
         return null;
     }
+
 }

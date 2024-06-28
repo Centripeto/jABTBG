@@ -17,15 +17,9 @@ public abstract class AbstractGame<T extends GameState<E>, E extends Action> imp
     @Override
     public abstract T getInitialState();
 
-    @Override
-    public abstract List<E> getPlayerActions(int player, T state);
 
     @Override
     public abstract T getNextState(T state, List<E> actions);
 
-    @Override
-    public abstract boolean isTerminal(T state);
-
-    @Override
-    public abstract double getUtility(T state, int player);
+    //TODO: devo aggiungere i metodi di game? Boh da vedere
 }

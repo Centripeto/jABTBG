@@ -49,18 +49,13 @@ public class TrisGame extends AbstractGame<TrisGameState,TrisAction> implements 
     }
 
 
-    @Override
-    public int getCurrentPlayer() {
-        return currentPlayer;
-    }
 
     @Override
     public TrisGameState getCurrentState() {
         return currentState;
     }
 
-    //Qui diamo per scontato che la action è valida, quindi la mossa si può effettuare
-    //Devo aggionrare il current player in state e in game
+
     @Override
     public TrisGameState getNextState(TrisGameState state, TrisAction action) {
         switch (currentPlayer){
@@ -76,21 +71,32 @@ public class TrisGame extends AbstractGame<TrisGameState,TrisAction> implements 
         return state;
     }
 
-
-// non utilizzato, per ora lascio qui
+    //TODO: Da levare
     @Override
-    public List<TrisAction> getPlayerActions(int player, TrisGameState state) {
-        List<TrisAction> availableActions = new ArrayList<>();
-        for(int i=0;i<3;i++){
-            for(int j=0;j<3;j++){
-                if(state.isCellFree(i,j)){
-                    availableActions.add(new TrisAction(i,j,player));
-                }
-            }
-        }
-        return availableActions;
+    public List<TrisAction> getPlayerActions(int playerIndex, TrisGameState gameState) {
+        return null;
     }
 
+    @Override
+    public int getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+
+    //TODO: da levare
+    @Override
+    public boolean isTerminal(GameState state) {
+        return false;
+    }
+
+    //TODO: da levare
+    @Override
+    public double getUtility(GameState state, int playerIndex) {
+        return 0;
+    }
+
+
+    //Non serve al tris
     @Override
     public InformationSet getInformationSet(int playerIndex, TrisGameState gameState) {
         return null;
@@ -102,24 +108,8 @@ public class TrisGame extends AbstractGame<TrisGameState,TrisAction> implements 
     }
 
 
-    @Override
-    public boolean isTerminal(TrisGameState state) {
-        return state.isTerminalNode();
-    }
 
-    //Non mi serve
-    @Override
-    public double getUtility(TrisGameState state, int player) {
-        //Devo lanciare un'eccezione se lo stato non è terminale
-        if(!state.isTerminalNode())
-            return -1;
-        //Altrimenti, in base al vincitore, do una ricompensa
-    return 0;
-
-    }
-
-
-    //Non mi serve
+    //TODO: da levare
     @Override
     public TrisGameState getInitialState() {
         return null;

@@ -48,18 +48,6 @@ public class TrisGameState implements GameState<TrisAction> {
         return true;
     }
 
-    //Crea una copia di se stesso
-    //Serve necessariamente al monte carlo
-    public TrisGameState copy(){
-        Board copyBoard = new Board();
-        int copyPlayer = currentPlayer;
-        for(int i=0;i<3;i++){
-            for(int j=0;j<3;j++){
-                copyBoard.getBoard()[i][j]=this.board.getBoard()[i][j];
-            }
-        }
-        return new TrisGameState(copyBoard,copyPlayer);
-    }
 
     public void setCurrentPlayer(int currentPlayer) {
         this.currentPlayer = currentPlayer;
@@ -93,20 +81,7 @@ public class TrisGameState implements GameState<TrisAction> {
     }
 
 
-    @Override
-    public GameState<TrisAction> getNextState(TrisAction action) {
-        switch(currentPlayer){
-            case 0:
-                this.getBoard().setSymbol(action.getX(),action.getY(), Symbol.CROSS);
-                currentPlayer++;
-                break;
-            case 1:
-                this.getBoard().setSymbol(action.getX(),action.getY(), Symbol.CIRCLE);
-                currentPlayer--;
-                break;
-        }
-        return this.copy();
-    }
+
 
     //Qua devo verificare se board ha una configurazione finale o meno
     @Override
@@ -136,7 +111,7 @@ public class TrisGameState implements GameState<TrisAction> {
     }
 
     @Override
-    public GameState<TrisAction> copius() {
+    public GameState<TrisAction> deepCopy() {
         Board copyBoard = new Board();
         int copyPlayer = currentPlayer;
         for(int i=0;i<3;i++){
@@ -179,11 +154,6 @@ public class TrisGameState implements GameState<TrisAction> {
 
 
 
-    //Non verrà utilizzato nel tris
-    @Override
-    public double getUtility(int playerIndex) {
-        return 0;
-    }
 
     //non verrà utilizzato nel tris
     @Override
@@ -203,17 +173,12 @@ public class TrisGameState implements GameState<TrisAction> {
         return false;
     }
 
-    //non verrà utilizzato nel tris
+    //TODO: da levare
     @Override
-    public boolean isChanceNode() {
-        return false;
+    public double getUtility(int playerIndex) {
+        return 0;
     }
 
-    //non verrà utilizzato nel tris
-    @Override
-    public List<GameState> getChanceOutcomes() {
-        return null;
-    }
 
 
 

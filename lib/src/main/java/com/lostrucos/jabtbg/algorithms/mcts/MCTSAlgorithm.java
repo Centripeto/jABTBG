@@ -153,7 +153,7 @@ public class MCTSAlgorithm<E extends Action, T extends GameState<E>> implements 
      * @param startingNode the startingNode to start the playout from.
      */
     void simulation(MCTSNode<E,T> startingNode) {
-        MCTSNode<E,T> terminalNode = new MCTSNode<>((T)startingNode.getState().copius(),startingNode.getParentNode());
+        MCTSNode<E,T> terminalNode = new MCTSNode<>((T)startingNode.getState().deepCopy(),startingNode.getParentNode());
         while(!terminalNode.isTerminal()) {
             List<E> actionList = new ArrayList<>(terminalNode.getState().getAvailableActions(terminalNode.getState().getCurrentPlayer()));
             Random random = new Random();
@@ -179,22 +179,22 @@ public class MCTSAlgorithm<E extends Action, T extends GameState<E>> implements 
         } while (startingNode != null);
     }
 
-    //Questo è hard coded, in realtà all'algoritmo serve sapere il numero di giocatori per stabilire le ricompense
+    /**
+     * The algorithm evalutes the given terminal node and creates an array of rewards
+     *
+     * @param terminalNode the terminal node that refers to a terminal game state
+     * @return an array of rewards
+     */
+
     private List<Double> getReward(MCTSNode<E,T> terminalNode){
         List<Double> reward = new ArrayList<>();
-        if(terminalNode.getState().isTie()) { //Se è un pareggio assegno 0.5 ad entrambi
+        if(terminalNode.getState().isTie()) {
             reward.add(0.5);
             reward.add(0.5);
         }
         else{
-            /*
-            Per il discorso che ho fatto l'altra volta:
-            Poiché ad ogni azione viene aggiornato il currenplayer, se lo stato è terminale e c'è un vincitore,
-            l'indice del vincitore è il giocatore corrente dello stato precedente
-             */
-            int winnerPlayer = terminalNode.getState().getCurrentPlayer();
-            //Si, lo so, scritto con gli if è bruttissimo ma adesso non è la mia priorità
-            if(winnerPlayer==0){
+            int loserPlayer = terminalNode.getState().getCurrentPlayer();
+            if(loserPlayer==0){
                 reward.add(0,1.0);
                 reward.add(1,-1.0);
             }
@@ -225,7 +225,7 @@ public class MCTSAlgorithm<E extends Action, T extends GameState<E>> implements 
     }
 
     public MCTSNode<E,T> getOrCreateChild(MCTSNode<E,T> node, E action){
-        MCTSNode<E,T> child = node.getChildNodes().computeIfAbsent(action, a -> new MCTSNode<E, T>((T) node.getState().copius(),node));
+        MCTSNode<E,T> child = node.getChildNodes().computeIfAbsent(action, a -> new MCTSNode<E, T>((T) node.getState().deepCopy(),node));
         node.setLeaf(false);
         return child;
     }

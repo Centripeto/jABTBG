@@ -41,6 +41,10 @@ public class Player implements Agent<TrisGameState,TrisAction> {
         return result;
     }
 
+
+
+
+
     //non serve ora
     @Override
     public void updateAfterAction(TrisGameState state, TrisAction action) {

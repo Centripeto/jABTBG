@@ -22,18 +22,29 @@ public interface GameState<E extends Action>{
      */
     boolean isTerminalNode();
 
+    /**
+     * Tells if the current game state is a tie.
+     *
+     * @return true if the game is a tie
+     *         false otherwise
+     */
     boolean isTie();
 
+    /**
+     * Modifies the current game state by applying an action
+     *
+     * @param action the action to be applied to the current game state
+     * @return the new game state after applying the action
+     */
     GameState<E> applyAction(E action);
-    GameState<E> copius();
 
     /**
-     * Returns the utility value for a given player in this state.
+     * Creates a deep copy of the current game state
      *
-     * @param playerIndex the index of the player.
-     * @return the utility value.
+     * @return the cloned game state
      */
-    double getUtility(int playerIndex); //metodo già presente in game, ha senso?
+    GameState<E> deepCopy();
+
 
     /**
      * Returns the information set (InformationSet) known to the specified playerIndex in that state.
@@ -53,21 +64,6 @@ public interface GameState<E extends Action>{
     // Restituisce un valore booleano che indica se il giocatore specificato è ancora presente in gioco (non eliminato) in questo stato di gioco.
     boolean isPlayerStillInGame(int player);
 
-    /**
-     * Checks if the current state is a chance node.
-     *
-     * @return true if this state is a chance node, false otherwise.
-     */
-    // Restituisce un valore booleano che indica se lo stato corrente è un nodo di chance (ad esempio, se c'è un evento casuale come il lancio di un dado).
-    boolean isChanceNode();
-
-    /**
-     * Returns a list of states, one for every outcome derived from this state.
-     *
-     * @return the list of states for every outcome.
-     */
-    // Se lo stato corrente è un nodo di chance, restituisce una lista di possibili stati successivi con le relative probabilità.
-    List<GameState> getChanceOutcomes();
 
     /**
      * Returns a representation of the state of the game.
@@ -78,5 +74,7 @@ public interface GameState<E extends Action>{
 
     List<E> getAvailableActions(int playerIndex);  //restituisce le azioni disponibili per un giocatore in questo stato
 
-    GameState<E> getNextState(E action); //restituisce il prossimo stato di gioco
+
+    //TODO: da levare, ma da errore su altri algoritmi
+    double getUtility(int playerIndex);
 }

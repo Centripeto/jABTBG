@@ -14,8 +14,16 @@ public interface Algorithm <T extends GameState<E>,E extends Action>{
     void initialize(Game<T,E> game, Agent<T,E> agent); //come specificato, è l'agent che utilizza l'algoritmo e non viceversa
     //altro punto, all'algoritmo serve game o gamestate?
 
+    /**
+     * Initializes the algorithm with the given state of the game
+     *
+     * @param state the state of the game
+     */
     void initialize(T state);
 
+    /**
+     * Resets the algorithm internal information
+     */
     void reset();
 
     /**
@@ -41,6 +49,13 @@ public interface Algorithm <T extends GameState<E>,E extends Action>{
      */
     String toString();
 
+    /**
+     * Applies a pseudo action to a game state during the simulation. The original game state is not modified
+     *
+     * @param state the current state of the simulation, not the actual game state
+     * @param action the action to apply
+     * @return the new state after applying the action
+     */
     GameState<E> applyPseudoAction(T state,E action);
 
 }
