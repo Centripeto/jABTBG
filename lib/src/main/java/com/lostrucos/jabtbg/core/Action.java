@@ -4,8 +4,6 @@ package com.lostrucos.jabtbg.core;
  * Represents an action that can be taken in the game.
  */
 public interface Action {
-
-
     /**
      * Returns a representation of the action.
      *
@@ -19,6 +17,4 @@ public interface Action {
      * @return the index of the player.
      */
     int getPlayer();
-
-    GameState applyAction(GameState gameState);
 }

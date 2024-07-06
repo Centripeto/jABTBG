@@ -1,13 +1,9 @@
 package com.lostrucos.jabtbg.core;
 
-import com.lostrucos.jabtbg.tris.TrisAction;
-import com.lostrucos.jabtbg.tris.TrisGameState;
-
 /**
  * Represents an agent (player) in the game.
  */
 public interface Agent<T extends GameState<E>, E extends Action> {
-
     /**
      * Returns the index of the player this agent is controlling.
      *
@@ -28,9 +24,6 @@ public interface Agent<T extends GameState<E>, E extends Action> {
     // Consente all'agente di aggiornare il suo stato interno dopo che un'azione è stata eseguita nello stato di gioco specificato.
     void updateAfterAction(T state, E action); //In pratica l'agente aggiorna il suo information set, questo è il succo
 
-
-
     // Reimposta lo stato interno dell'agente prima di iniziare una nuova partita.
     void reset();
-
 }

@@ -10,23 +10,24 @@ public class TrisAction implements Action {
     private int y;
     private int player;
 
-
-    public TrisAction(int x, int y, int player){
-        this.x=x;
-        this.y=y;
-        this.player=player;
+    public TrisAction(int x, int y, int player) {
+        this.x = x;
+        this.y = y;
+        this.player = player;
     }
-
 
     public int getX() {
         return x;
     }
-    public int getY() { return y; }
+
+    public int getY() {
+        return y;
+    }
+
     @Override
     public int getPlayer() {
         return player;
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -39,12 +40,4 @@ public class TrisAction implements Action {
     public int hashCode() {
         return Objects.hash(x, y, player);
     }
-
-
-    //Da levare
-    @Override
-    public GameState applyAction(GameState gameState) {
-        return null;
-    }
-
 }

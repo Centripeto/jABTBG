@@ -4,20 +4,17 @@ import com.lostrucos.jabtbg.core.Agent;
 
 import java.util.Scanner;
 
-public class Player implements Agent<TrisGameState,TrisAction> {
+public class Player implements Agent<TrisGameState, TrisAction> {
     private final int id;
-
 
     public Player(int id) {
         this.id = id;
     }
 
-
     @Override
     public int getPlayerIndex() {
         return id;
     }
-
 
     //Allora,nel caso di ia che usa mcts, la action verrà data dall'algoritmo.
     //Nel caso generico di giocatore, supponiamo che la action sia casuale.
@@ -27,13 +24,13 @@ public class Player implements Agent<TrisGameState,TrisAction> {
         Scanner scanner = new Scanner(System.in);
         int row, col;
         TrisAction result;
-        while(true){
+        while (true) {
             System.out.println("Inserire le coordinate della mossa desiderata (riga e colonna)");
-            row=scanner.nextInt();
-            col=scanner.nextInt();
-            TrisAction temp = new TrisAction(row,col,this.id);
-            if(state.isActionLegal(temp)){
-                result=temp;
+            row = scanner.nextInt();
+            col = scanner.nextInt();
+            TrisAction temp = new TrisAction(row, col, this.id);
+            if (state.isActionLegal(temp)) {
+                result = temp;
                 break;
             }
             System.out.println("Mossa non valida, riprovare");
@@ -41,22 +38,12 @@ public class Player implements Agent<TrisGameState,TrisAction> {
         return result;
     }
 
-
-
-
+    //non serve ora
+    @Override
+    public void updateAfterAction(TrisGameState state, TrisAction action) {}
 
     //non serve ora
     @Override
-    public void updateAfterAction(TrisGameState state, TrisAction action) {
-
-    }
-
-    //non serve ora
-    @Override
-    public void reset() {
-
-    }
-
-
+    public void reset() {}
 
 }

@@ -5,13 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9ab4c8fc-b31e-4c6d-8870-e679e6ccb3a4" name="Changes" comment="Seconda Iterazione:&#10;Correzione Core&#10;Correzione MCTS&#10;Implementazione caso di studio: Tris">
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/dataanalysis/DataCollector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/dataanalysis/DefaultDataCollector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/dataanalysis/DefaultSimulationReconstructor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/dataanalysis/GameTreeVisualizer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/dataanalysis/PerformanceAnalyzer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/dataanalysis/SimulationManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/dataanalysis/SimulationReconstructor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/dataanalysis/SimulationResult.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/mcts/MCTSAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/mcts/MCTSAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/Prova.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/Prova.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/mcts/ISMCTSAlgorithm.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/mcts/MCTSNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/mcts/MCTSNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/minimax/AlphaBetaPruningMinimaxAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/minimax/AlphaBetaPruningMinimaxAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/minimax/MinimaxAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/minimax/MinimaxAlgorithm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/AbstractGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/AbstractGame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/Action.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/Action.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/Algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/Algorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/Agent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/GameState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/MCTSPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/MCTSPlayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/TrisAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/TrisAction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/TrisGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/TrisGame.java" afterDir="false" />
@@ -104,6 +118,7 @@
     &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.ISMCTSAlgorithmTest.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.ISMCTSAlgorithmTest.testGetAction.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.jABTBG:lib [:lib:Prova.main()].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.jICIG [assemble].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.jICIG [buildDependents].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.jICIG [build].executor&quot;: &quot;Run&quot;,
@@ -308,15 +323,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Seconda Iterazione:&#10;Correzione Core&#10;Correzione MCTS&#10;Implementazione caso di studio: Tris" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/Prova.java</url>
-          <line>6</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="java.util.HashMap$Node" memberName="key" />

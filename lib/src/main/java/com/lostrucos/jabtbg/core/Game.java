@@ -5,15 +5,13 @@ import java.util.List;
 /**
  * Represents a game with complete but imperfect information.
  */
-public interface Game <T extends GameState<E>, E extends Action>{
-
-
+public interface Game<T extends GameState<E>, E extends Action> {
 
     /**
      * Returns the information set for a given player in a given game state.
      *
      * @param playerIndex the index of the player.
-     * @param gameState the current state of the game.
+     * @param gameState   the current state of the game.
      * @return the information set for the player.
      */
     //Non so se ha senso, cioè, se io mi trovo in uno stato, allora non sto nell'information set(?) boh, da rivedere
@@ -46,7 +44,7 @@ public interface Game <T extends GameState<E>, E extends Action>{
     /**
      * Updates the given game state by applying an action
      *
-     * @param state the state to be updated
+     * @param state  the state to be updated
      * @param action the action to be applied
      * @return the new state after having applied the action
      */
@@ -69,7 +67,6 @@ public interface Game <T extends GameState<E>, E extends Action>{
      * @return the index of the current player
      */
     int getCurrentPlayer(); //restituisce l'indice del giocatore di turno
-
 
     //TODO: da levare, ma da errore cfrm
     boolean isTerminal(GameState state);
