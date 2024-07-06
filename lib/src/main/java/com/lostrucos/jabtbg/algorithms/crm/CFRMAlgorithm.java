@@ -41,6 +41,11 @@ public class CFRMAlgorithm implements Algorithm {
     }
 
     @Override
+    public void setUtilityStrategy(UtilityStrategy strategy) {
+
+    }
+
+    @Override
     public void reset() {
 
     }

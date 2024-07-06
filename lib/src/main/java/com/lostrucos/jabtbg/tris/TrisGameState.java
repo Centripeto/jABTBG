@@ -1,9 +1,6 @@
 package com.lostrucos.jabtbg.tris;
 
 import com.lostrucos.jabtbg.core.GameState;
-import com.lostrucos.jabtbg.core.InformationSet;
-import com.lostrucos.jabtbg.core.UtilityStrategy;
-import it.unicam.pentago.models.PentagoBoard;
 
 import java.util.ArrayList;
 import java.util.List;

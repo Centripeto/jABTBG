@@ -1,7 +1,6 @@
 package com.lostrucos.jabtbg.algorithms.mcts;
 
 import com.lostrucos.jabtbg.core.*;
-import it.unicam.pentago.models.PentagoGameState;
 
 import java.util.*;
 
@@ -124,7 +123,7 @@ public class MCTSAlgorithm<E extends Action, T extends GameState<E>> implements 
     private MCTSNode<T, E> expand(MCTSNode<T, E> node) {
         if (node.isTerminal()) return node;
 
-        //List<E> untriedActions = utilityStrategy.suggestStrategicMoves((PentagoGameState)node.getState(), node.getState().getCurrentPlayer());
+        //List<E> untriedActions = utilityStrategy.suggestStrategicMoves(node.getState(), node.getState().getCurrentPlayer());
         List<E> untriedActions = node.getUntriedActions();
         if (untriedActions.isEmpty()) return node;
 
@@ -149,7 +148,7 @@ public class MCTSAlgorithm<E extends Action, T extends GameState<E>> implements 
     private double simulate(MCTSNode<T, E> node) {
         MCTSNode<T, E> terminalNode = new MCTSNode<>((T) node.getState().deepCopy(), node.getParentNode());
         while (!terminalNode.getState().isTerminalNode()) {
-            //List<E> actions = utilityStrategy.suggestStrategicMoves((PentagoGameState) terminalNode.getState(), terminalNode.getState().getCurrentPlayer());
+            //List<E> actions = utilityStrategy.suggestStrategicMoves(terminalNode.getState(), terminalNode.getState().getCurrentPlayer());
             List<E> actions = terminalNode.getState().getAvailableActions(terminalNode.getState().getCurrentPlayer());
             E randomAction = actions.get(new Random().nextInt(actions.size()));
             this.applyPseudoAction(terminalNode.getState(), randomAction);

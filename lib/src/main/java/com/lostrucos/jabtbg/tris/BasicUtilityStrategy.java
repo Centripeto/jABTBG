@@ -1,7 +1,6 @@
 package com.lostrucos.jabtbg.tris;
 
 import com.lostrucos.jabtbg.core.UtilityStrategy;
-import it.unicam.pentago.models.PentagoGameState;
 
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class BasicUtilityStrategy implements UtilityStrategy<TrisGameState, Tris
     }
 
     @Override
-    public List<TrisAction> suggestStrategicMoves(PentagoGameState state, int currentPlayer) {
+    public List<TrisAction> suggestStrategicMoves(TrisGameState state, int currentPlayer) {
         return List.of();
     }
 }
