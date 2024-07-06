@@ -14,7 +14,7 @@ Broken down by context of information provided by the game, you will find the fo
        - Alfa-Beta pruning Minimax
 
   2) Imperfect information algorithms:
-       - Perfect Information Monte Carlo Tree Search (PIMCTS)
+       - Perfect Information Monte Carlo Tree Search (PIMCTS) --> Coming soon...
        - Information Set Monte Carlo Tree Search (ISMCTS)
        - Counterfactual Regret Minimization (CFRM)
     
