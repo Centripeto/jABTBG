@@ -6,8 +6,7 @@ import java.util.List;
  * Represents the state of the game and has all the game informations at a particular point in the game.
  * A GameState is derived from the current composition of the game information.
  */
-public interface GameState {
-
+public interface GameState<E extends Action>{
     /**
      * Returns the index of the current player.
      *
@@ -31,42 +30,41 @@ public interface GameState {
     boolean isTerminalNode();
 
     /**
-     * Returns the utility value for a given player in this state.
+     * Tells if the current game state is a tie.
      *
-     * @param playerIndex the index of the player.
-     * @return the utility value.
+     * @return true if the game is a tie
+     *         false otherwise
      */
-    double getUtility(int playerIndex);
+    boolean isTie();
 
     /**
-     * Returns the information set (InformationSet) known to the specified playerIndex in that state.
+     * Modifies the current game state by applying an action
      *
-     * @param playerIndex the index of the player.
-     * @return the playerIndex's InformationSet.
+     * @param action the action to be applied to the current game state
+     * @return the new game state after applying the action
      */
-    InformationSet getInformationSet(int playerIndex);
+    GameState<E> applyAction(E action);
 
-    // Restituisce una lista degli indici dei giocatori coinvolti in questo stato di gioco.
+    /**
+     * Creates a deep copy of the current game state
+     *
+     * @return the cloned game state
+     */
+    GameState<E> deepCopy();
+
+    /**
+     * Returns a list of all the indexes of the players still in game in this game state
+     * @return the indexes of the players still in game
+     */
     List<Integer> getPlayersInGame();
 
-    // Restituisce un valore booleano che indica se il giocatore specificato è ancora presente in gioco (non eliminato) in questo stato di gioco.
+    /**
+     * Method that tells wheter a player, represented by his index, is still in the game in this game state
+     * @param player the index of the player
+     * @return true if the player is still in the game
+     *         false otherwise
+     */
     boolean isPlayerStillInGame(int player);
-
-    /**
-     * Checks if the current state is a chance node.
-     *
-     * @return true if this state is a chance node, false otherwise.
-     */
-    // Restituisce un valore booleano che indica se lo stato corrente è un nodo di chance (ad esempio, se c'è un evento casuale come il lancio di un dado).
-    boolean isChanceNode();
-
-    /**
-     * Returns a list of states, one for every outcome derived from this state.
-     *
-     * @return the list of states for every outcome.
-     */
-    // Se lo stato corrente è un nodo di chance, restituisce una lista di possibili stati successivi con le relative probabilità.
-    List<GameState> getChanceOutcomes();
 
     /**
      * Returns a representation of the state of the game.
@@ -75,5 +73,17 @@ public interface GameState {
      */
     String toString();
 
-    List<Action> getAvailableActions(int playerIndex);
+    /**
+     * Method that returns a list of all the available actions in this game state for the given player
+     * @param playerIndex the index of the player
+     * @return the actions available to that player for this game state
+     */
+    List<E> getAvailableActions(int playerIndex);
+
+    /**
+     * Utility function that gives us the utility for the given player in this game state
+     * @param playerIndex the index of the player
+     * @return the utility the player receives
+     */
+    double getUtility(int playerIndex);
 }

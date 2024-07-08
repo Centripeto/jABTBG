@@ -7,18 +7,20 @@ import java.util.*;
 /**
  * Implements the Monte Carlo Tree Search (MCTS) algorithm for games with perfect information.
  */
-public class MCTSAlgorithm implements Algorithm {
-    private Game game;
-    private Agent agent;
+public class MCTSAlgorithm<E extends Action, T extends GameState<E>> implements Algorithm<T, E> {
+
     private final int numIterations;
     private final double explorationConstant;
-    private Map<GameState, MCTSNode> gameTree;
-    private MCTSNode rootNode;
+    private final Map<T, MCTSNode<T, E>> gameTree;
+    private MCTSNode<T, E> rootNode;
+    private UtilityStrategy<T, E> utilityStrategy;
+
+    private static final long TIME_LIMIT_MS = 10000; // 10 secondi
 
     /**
      * Constructs a new MCTSAlgorithm.
      *
-     * @param numIterations the number of simulations to run.
+     * @param numIterations       the number of simulations to run.
      * @param explorationConstant the exploration constant used in UCB.
      */
     public MCTSAlgorithm(int numIterations, double explorationConstant) {
@@ -27,20 +29,31 @@ public class MCTSAlgorithm implements Algorithm {
         this.gameTree = new HashMap<>();
     }
 
+    @Override
+    public void initialize(Game<T, E> game, Player<T, E> player) {}
+
     /**
      * Initializes the algorithm with the given game and agent.
      * Initializes also the game tree and its root node.
      *
-     * @param game the game to be played.
-     * @param agent the agent playing the game.
+     * @param state the current game state.
      */
     @Override
-    public void initialize(Game game, Agent agent) {
-        this.game = game;
-        this.agent = agent;
-        gameTree.put(game.getInitialState(), new MCTSNode(game.getInitialState(), null));
-        Optional<GameState> firstKey = gameTree.keySet().stream().findFirst();
-        rootNode = firstKey.map(informationSet -> gameTree.get(informationSet)).orElse(null);
+    public void initialize(T state) {
+        gameTree.clear();
+        rootNode = new MCTSNode<>(state, null);
+        gameTree.put(state, rootNode);
+    }
+
+    @Override
+    public void setUtilityStrategy(UtilityStrategy<T, E> strategy) {
+        this.utilityStrategy = strategy;
+    }
+
+    @Override
+    public void reset() {
+        gameTree.clear();
+        rootNode = null;
     }
 
     /**
@@ -51,113 +64,128 @@ public class MCTSAlgorithm implements Algorithm {
      * @return the selected action.
      */
     @Override
-    public Action chooseAction(GameState state) {
-        MCTSNode node = gameTree.get(state);
-        for (int i = 0; i < numIterations; i++) {
-            runIteration(node);
+    public E chooseAction(T state) {
+        if (rootNode == null || !rootNode.getState().equals(state)) {
+            initialize(state);
         }
-        return node.selectBestAction();
+
+        long startTime = System.currentTimeMillis();
+        int iterations = 0;
+
+        for (int i = 0; i < numIterations; i++) {
+            //while(System.currentTimeMillis() - startTime < TIME_LIMIT_MS && iterations < numIterations) {
+            //iterations++;
+            MCTSNode<T, E> selectedNode = select(rootNode);
+            MCTSNode<T, E> expandedNode = expand(selectedNode);
+            double reward = simulate(expandedNode);
+            backpropagate(expandedNode, reward);
+        }
+
+        //System.out.println("MCTS completed " + iterations + " iterations in " + (System.currentTimeMillis() - startTime) + "ms");
+
+        return getBestAction(rootNode);
+    }
+
+    @Override
+    public GameState<E> applyPseudoAction(T state, E action) {
+        return state.applyAction(action);
     }
 
     /**
      * Updates the tree after an action is taken.
      *
-     * @param state the new game state.
+     * @param state  the new game state.
      * @param action the action taken.
      */
     @Override
     public void updateAfterAction(GameState state, Action action) {
-        // Update tree with new state
-        InformationSet infoSet = state.getInformationSet(state.getCurrentPlayer());
-        gameTree.keySet().removeIf(key -> !key.equals(infoSet));
-    }
-
-    /**
-     * Runs one complete iteration starting from the given starting node (selection, expansion, simulation and back-propagation).
-     *
-     * @param startingNode the starting node for the iteration.
-     */
-    void runIteration(MCTSNode startingNode) {
-        MCTSNode leafNode = expandGameTree(selectLeafNode(startingNode));
-        simulation(leafNode);
     }
 
     /**
      * Selects a leaf node from the given starting node.
      *
-     * @param startingNode the starting node.
+     * @param node the starting node.
      * @return the selected leaf node.
      */
-    MCTSNode selectLeafNode(MCTSNode startingNode) {
-        MCTSNode selectedNode = startingNode;
-
-        if(selectedNode.isTerminal()) {
-            backpropagation(selectedNode);
+    private MCTSNode<T, E> select(MCTSNode<T, E> node) {
+        while (!node.isTerminal() && node.isFullyExpanded()) {
+            node = node.selectChild(explorationConstant);
         }
-
-        while(!selectedNode.isLeaf()) {
-            selectedNode = selectedNode.selectChild(explorationConstant);
-        }
-
-        return selectedNode;
+        return node;
     }
 
     /**
      * If the leaf node isn't a terminal node, expands the game tree one time from the given leaf node.
      *
-     * @param leafNode the leaf node to expand.
+     * @param node the leaf node to expand.
      * @return the expanded node.
      */
-    MCTSNode expandGameTree(MCTSNode leafNode) {
-        if(leafNode.isTerminal()) return leafNode;
+    private MCTSNode<T, E> expand(MCTSNode<T, E> node) {
+        if (node.isTerminal()) return node;
 
-        // 3 metodi diversi per ricavare la lista delle azioni disponibili per il nodo foglia selezionato per l'espansione
+        //List<E> untriedActions = utilityStrategy.suggestStrategicMoves(node.getState(), node.getState().getCurrentPlayer());
+        List<E> untriedActions = node.getUntriedActions();
+        if (untriedActions.isEmpty()) return node;
 
-        //List<Action> actionList = game.getPlayerActions(agent.getPlayerIndex(),leafNode.getState());
-        List<Action> actionList = leafNode.getState().getAvailableActions(agent.getPlayerIndex());
-        //InformationSet infoSet = leafNode.getState().getInformationSet(agent.getPlayerIndex());
-        //List<Action> actionList = infoSet.getPlayerActions();
-
-        // nel caso in cui il nodo venga creato grazie ad una azione presa a random dalla lista
-        //Random random = new Random();
-        //int randomIndex = random.nextInt(actionList.size());
-        //Action action = actionList.get(randomIndex);
-
-        // nel caso in cui il nodo venga creato grazie alla prima azione disponibile della lista
-        Action action = actionList.get(0);
-
-        MCTSNode expandedNode = leafNode.getOrCreateChild(action);
+        E availableRandomAction = untriedActions.get(new Random().nextInt(untriedActions.size()));
+        MCTSNode<T, E> expandedNode = getOrCreateChild(node, availableRandomAction);
+        this.applyPseudoAction(expandedNode.getState(), availableRandomAction);
         gameTree.put(expandedNode.getState(), expandedNode);
+
         return expandedNode;
+    }
+
+    public MCTSNode<T, E> getOrCreateChild(MCTSNode<T, E> node, E action) {
+        MCTSNode<T, E> child = node.getChildNodes().computeIfAbsent(action, a -> new MCTSNode<T, E>((T) node.getState().deepCopy(), node));
+        return child;
     }
 
     /**
      * Performs a simulation from the given starting node then calls a back-propagation for every simulation node created.
      *
-     * @param startingNode the startingNode to start the playout from.
+     * @param node the startingNode to start the playout from.
      */
-    void simulation(MCTSNode startingNode) {
-        MCTSNode terminalNode = startingNode;
-        while(!terminalNode.isTerminal()) {
-            List<Action> actionList = new ArrayList<>(startingNode.getChildNodes().keySet());
-            Random random = new Random();
-            int randomIndex = random.nextInt(actionList.size());
-            Action randomAction = actionList.get(randomIndex);
-            terminalNode = terminalNode.getOrCreateChild(randomAction);
+    private double simulate(MCTSNode<T, E> node) {
+        MCTSNode<T, E> terminalNode = new MCTSNode<>((T) node.getState().deepCopy(), node.getParentNode());
+        while (!terminalNode.getState().isTerminalNode()) {
+            //List<E> actions = utilityStrategy.suggestStrategicMoves(terminalNode.getState(), terminalNode.getState().getCurrentPlayer());
+            List<E> actions = terminalNode.getState().getAvailableActions(terminalNode.getState().getCurrentPlayer());
+            E randomAction = actions.get(new Random().nextInt(actions.size()));
+            this.applyPseudoAction(terminalNode.getState(), randomAction);
         }
-        backpropagation(terminalNode);
+        return utilityStrategy.calculateUtility(terminalNode.getState(), node.getState().getCurrentPlayer());
     }
 
     /**
      * Performs back-propagation to update the visits and score of all nodes with the results obtained from the simulation until it reaches the root node.
      *
-     * @param startingNode the starting node to perform the back-propagation step.
+     * @param node   the starting node to perform the back-propagation step.
+     * @param reward the reward for the visited node.
      */
-    void backpropagation(MCTSNode startingNode) {
-        do {
-            startingNode.updateNodeStats(game.getUtility(startingNode.getState(), agent.getPlayerIndex()));
-            startingNode = startingNode.getParentNode();
-        } while (startingNode != null);
+    private void backpropagate(MCTSNode<T, E> node, double reward) {
+        while (node != null) {
+            node.updateNodeStats(reward);
+            node = node.getParentNode();
+            reward = 1 - reward; // Invert reward for opponent
+        }
+    }
+
+    /**
+     * Select the best action of the given node based on the ratio of reward to visits.
+     *
+     * @param node the node from which to find the actions.
+     * @return the best action.
+     */
+    private E getBestAction(MCTSNode<T, E> node) {
+        if (node.getChildNodes().isEmpty()) {
+            // Se non ci sono figli, restituisci un'azione casuale dallo stato corrente
+            List<E> availableActions = node.getState().getAvailableActions(node.getState().getCurrentPlayer());
+            return availableActions.get(new Random().nextInt(availableActions.size()));
+        }
+        return node.getChildNodes().entrySet().stream()
+                .max(Comparator.comparingDouble(e -> e.getValue().getTotalReward() / e.getValue().getVisitCount()))
+                .map(Map.Entry::getKey)
+                .orElseThrow(() -> new IllegalStateException("No children found"));
     }
 
     /**
@@ -165,7 +193,7 @@ public class MCTSAlgorithm implements Algorithm {
      *
      * @return the game tree.
      */
-    public Map<GameState, MCTSNode> getGameTree() {
+    public Map<T, MCTSNode<T, E>> getGameTree() {
         return gameTree;
     }
 
@@ -174,7 +202,7 @@ public class MCTSAlgorithm implements Algorithm {
      *
      * @return the root node.
      */
-    public MCTSNode getRootNode() {
+    public MCTSNode<T, E> getRootNode() {
         return rootNode;
     }
 }

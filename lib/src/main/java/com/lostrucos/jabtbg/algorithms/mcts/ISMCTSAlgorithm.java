@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class ISMCTSAlgorithm implements Algorithm {
     private Game game;
-    private Agent agent;
+    private Player player;
     private int numSimulations;
     private double explorationConstant;
     private Map<InformationSet, MCTSNode> gameTree;
@@ -32,16 +32,31 @@ public class ISMCTSAlgorithm implements Algorithm {
      * Initializes also the game tree and its root node.
      *
      * @param game the game to be played.
-     * @param agent the agent playing the game.
+     * @param player the agent playing the game.
      */
     @Override
-    public void initialize(Game game, Agent agent) {
+    public void initialize(Game game, Player player) {
         this.game = game;
-        this.agent = agent;
-        InformationSet initialInfoSet = game.getInitialState().getInformationSet(agent.getPlayerIndex());
+        this.player = player;
+        InformationSet initialInfoSet = game.getInitialState().getInformationSet(player.getPlayerIndex());
         gameTree.put(initialInfoSet, new MCTSNode(game.getInitialState(), null));
         Optional<InformationSet> firstKey = gameTree.keySet().stream().findFirst();
         rootNode = firstKey.map(gameTree::get).orElse(null);
+    }
+
+    @Override
+    public void initialize(GameState state) {
+
+    }
+
+    @Override
+    public void setUtilityStrategy(UtilityStrategy strategy) {
+
+    }
+
+    @Override
+    public void reset() {
+
     }
 
     /**
@@ -53,7 +68,7 @@ public class ISMCTSAlgorithm implements Algorithm {
      */
     @Override
     public Action chooseAction(GameState state) {
-        InformationSet infoSet = state.getInformationSet(agent.getPlayerIndex());
+        InformationSet infoSet = state.getInformationSet(player.getPlayerIndex());
         MCTSNode node = gameTree.get(infoSet);
         for (int i = 0; i < numSimulations; i++) {
             runIteration(node);
@@ -72,6 +87,12 @@ public class ISMCTSAlgorithm implements Algorithm {
         InformationSet infoSet = state.getInformationSet(state.getCurrentPlayer());
         gameTree.keySet().removeIf(key -> !key.equals(infoSet));
     }
+
+    @Override
+    public GameState applyPseudoAction(GameState state, Action action) {
+        return null;
+    }
+
 
     /**
      * Runs one complete iteration starting from the given starting node (selection, expansion, simulation and backpropagation).
@@ -116,7 +137,7 @@ public class ISMCTSAlgorithm implements Algorithm {
 
         //List<Action> actionList = game.getPlayerActions(agent.getPlayerIndex(),leafNode.getState());
         //List<Action> actionList = leafNode.getState().getAvailableActions(agent.getPlayerIndex());
-        InformationSet infoSet = leafNode.getState().getInformationSet(agent.getPlayerIndex());
+        InformationSet infoSet = leafNode.getState().getInformationSet(player.getPlayerIndex());
         List<Action> actionList = infoSet.getPlayerActions();
 
         // nel caso in cui il nodo venga creato grazie ad una azione presa a random dalla lista
@@ -128,7 +149,7 @@ public class ISMCTSAlgorithm implements Algorithm {
         Action action = actionList.get(0);
 
         MCTSNode expandedNode = leafNode.getOrCreateChild(action);
-        gameTree.put(expandedNode.getState().getInformationSet(agent.getPlayerIndex()), expandedNode);
+        gameTree.put(expandedNode.getState().getInformationSet(player.getPlayerIndex()), expandedNode);
         return expandedNode;
     }
 
@@ -158,7 +179,7 @@ public class ISMCTSAlgorithm implements Algorithm {
      * @return the parent node of the backpropagated node.
      */
     MCTSNode backpropagationStep(MCTSNode startingNode) {
-        startingNode.updateNodeStats(game.getUtility(startingNode.getState(), agent.getPlayerIndex()));
+        startingNode.updateNodeStats(game.getUtility(startingNode.getState(), player.getPlayerIndex()));
         return startingNode.getParentNode();
     }
 

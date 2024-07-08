@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Minimax implements Algorithm {
     private Game game;
-    private Agent agent;
+    private Player player;
     private int playerIndex;
     private int maxDepth;
 
@@ -15,10 +15,25 @@ public class Minimax implements Algorithm {
     }
 
     @Override
-    public void initialize(Game game, Agent agent) {
+    public void initialize(Game game, Player player) {
         this.game = game;
-        this.agent = agent;
-        this.playerIndex = agent.getPlayerIndex();
+        this.player = player;
+        this.playerIndex = player.getPlayerIndex();
+    }
+
+    @Override
+    public void initialize(GameState state) {
+
+    }
+
+    @Override
+    public void setUtilityStrategy(UtilityStrategy strategy) {
+
+    }
+
+    @Override
+    public void reset() {
+
     }
 
     //
@@ -46,6 +61,12 @@ public class Minimax implements Algorithm {
     public void updateAfterAction(GameState gameState, Action action) {
         // Non è necessario aggiornare lo stato interno in questo caso
     }
+
+    @Override
+    public GameState applyPseudoAction(GameState state, Action action) {
+        return null;
+    }
+
 
     private double minimaxRecursive(InformationSet infoSet, int depth) {
         if (infoSet.isTerminal() || depth == maxDepth) {

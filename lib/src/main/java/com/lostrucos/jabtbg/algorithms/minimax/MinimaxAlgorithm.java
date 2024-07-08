@@ -6,17 +6,32 @@ import java.util.List;
 
 public class MinimaxAlgorithm implements Algorithm {
     private Game game;
-    private Agent agent;
+    private Player player;
 
     @Override
-    public void initialize(Game game, Agent agent) {
+    public void initialize(Game game, Player player) {
         this.game = game;
-        this.agent = agent;
+        this.player = player;
+    }
+
+    @Override
+    public void initialize(GameState state) {
+
+    }
+
+    @Override
+    public void setUtilityStrategy(UtilityStrategy strategy) {
+
+    }
+
+    @Override
+    public void reset() {
+
     }
 
     @Override
     public Action chooseAction(GameState gameState) {
-        return minimaxDecision(gameState, agent.getPlayerIndex() % 2 == 0);
+        return minimaxDecision(gameState, player.getPlayerIndex() % 2 == 0);
     }
 
     @Override
@@ -24,8 +39,13 @@ public class MinimaxAlgorithm implements Algorithm {
         // Potrebbe essere implementato per aggiornare lo stato interno, se necessario.
     }
 
+    @Override
+    public GameState applyPseudoAction(GameState state, Action action) {
+        return null;
+    }
+
     private Action minimaxDecision(GameState gameState, boolean isMaximizing) {
-        List<? extends Action> actions = game.getPlayerActions(agent.getPlayerIndex(), gameState);
+        List<? extends Action> actions = game.getPlayerActions(player.getPlayerIndex(), gameState);
         Action bestAction = null;
         double bestValue = isMaximizing ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY;
 
@@ -51,11 +71,11 @@ public class MinimaxAlgorithm implements Algorithm {
 
     double minMaxValue(GameState gameState, boolean isMaximizing) {
         if (gameState.isTerminalNode()) {
-            return gameState.getUtility(agent.getPlayerIndex());
+            return gameState.getUtility(player.getPlayerIndex());
         }
 
         double value = isMaximizing ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY;
-        List<? extends Action> actions = game.getPlayerActions(agent.getPlayerIndex(), gameState);
+        List<? extends Action> actions = game.getPlayerActions(player.getPlayerIndex(), gameState);
 
         for (Action action : actions) {
             GameState newState = action.applyAction(gameState);

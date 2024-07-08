@@ -4,10 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9ab4c8fc-b31e-4c6d-8870-e679e6ccb3a4" name="Changes" comment="">
+    <list default="true" id="9ab4c8fc-b31e-4c6d-8870-e679e6ccb3a4" name="Changes" comment="Seconda Iterazione:&#10;Correzione Core&#10;Correzione MCTS&#10;Implementazione caso di studio: Tris">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/crm/CFRMAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/crm/CFRMAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/mcts/ISMCTSAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/mcts/ISMCTSAlgorithm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/mcts/MCTSAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/mcts/MCTSAlgorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/GameState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/minimax/AlphaBetaPruningMinimaxAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/minimax/AlphaBetaPruningMinimaxAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/minimax/Minimax.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/minimax/Minimax.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/minimax/MinimaxAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/minimax/MinimaxAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/Algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/Algorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/dataanalysis/SimulationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/dataanalysis/SimulationManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/MCTSPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/MCTSPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/TrisGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/TrisGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jabtbg/algorithms/crm/CFRMAlgorithmTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jabtbg/algorithms/crm/CFRMAlgorithmTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jabtbg/algorithms/minimax/AlphaBetaPruningMinimaxAlgorithmTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jabtbg/algorithms/minimax/AlphaBetaPruningMinimaxAlgorithmTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jabtbg/algorithms/minimax/MinimaxAlgorithmTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jabtbg/algorithms/minimax/MinimaxAlgorithmTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,12 +72,18 @@
       <list>
         <option value="Interface" />
         <option value="JUnit4 Test Class" />
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Second-iteration" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -73,7 +93,7 @@
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2g3ZUI2JAyeB57iZSEHQkdH6ORH" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -91,6 +111,7 @@
     &quot;Gradle.ISMCTSAlgorithmTest.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.ISMCTSAlgorithmTest.testGetAction.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.jABTBG [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.jABTBG:lib [:lib:Prova.main()].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.jICIG [assemble].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.jICIG [buildDependents].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.jICIG [build].executor&quot;: &quot;Run&quot;,
@@ -129,16 +150,23 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4&quot;: &quot;&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;test-branch&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Third-iteration&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/bardy/Documents/GitHub/jABTBG&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Giovanni/Desktop/TicTacToe&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -153,6 +181,19 @@
     </key>
   </component>
   <component name="RunManager" selected="Gradle.jABTBG [build]">
+    <configuration name="Prova" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.lostrucos.jabtbg.Prova" />
+      <module name="jABTBG.lib.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.lostrucos.jabtbg.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="jABTBG [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -197,22 +238,22 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="ISMCTSAlgorithmTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="BoardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="jABTBG.lib.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.lostrucos.jabtbg.algorithms.mcts.*" />
+          <option name="PATTERN" value="com.lostrucos.jabtbg.tris.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.lostrucos.jabtbg.algorithms.mcts" />
-      <option name="MAIN_CLASS_NAME" value="com.lostrucos.jabtbg.algorithms.mcts.ISMCTSAlgorithmTest" />
+      <option name="PACKAGE_NAME" value="com.lostrucos.jabtbg.tris" />
+      <option name="MAIN_CLASS_NAME" value="com.lostrucos.jabtbg.tris.BoardTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ISMCTSAlgorithmTest.testChooseAction" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ISMCTSAlgorithmTest.testSelectLeafNode" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="jABTBG.lib.test" />
       <extension name="coverage">
         <pattern>
@@ -222,23 +263,8 @@
       </extension>
       <option name="PACKAGE_NAME" value="com.lostrucos.jabtbg.algorithms.mcts" />
       <option name="MAIN_CLASS_NAME" value="com.lostrucos.jabtbg.algorithms.mcts.ISMCTSAlgorithmTest" />
-      <option name="METHOD_NAME" value="testChooseAction" />
+      <option name="METHOD_NAME" value="testSelectLeafNode" />
       <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ISMCTSNodeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="jABTBG.lib.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.lostrucos.jabtbg.algorithms.mcts.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.lostrucos.jabtbg.algorithms.mcts" />
-      <option name="MAIN_CLASS_NAME" value="com.lostrucos.jabtbg.algorithms.mcts.ISMCTSNodeTest" />
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -246,10 +272,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.jABTBG [build]" />
+        <item itemvalue="Application.Prova" />
+        <item itemvalue="JUnit.BoardTest" />
+        <item itemvalue="JUnit.ISMCTSAlgorithmTest.testSelectLeafNode" />
         <item itemvalue="Gradle.jICIG [clean]" />
-        <item itemvalue="JUnit.ISMCTSNodeTest" />
-        <item itemvalue="JUnit.ISMCTSAlgorithmTest" />
-        <item itemvalue="JUnit.ISMCTSAlgorithmTest.testChooseAction" />
       </list>
     </recent_temporary>
   </component>
@@ -261,8 +287,25 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1714928236172</updated>
+      <workItem from="1717663888798" duration="58116000" />
+      <workItem from="1718211763059" duration="30694000" />
+      <workItem from="1719391293909" duration="3423000" />
+      <workItem from="1719422342040" duration="319000" />
+      <workItem from="1719479850778" duration="5486000" />
     </task>
+    <task id="LOCAL-00001" summary="Seconda Iterazione:&#10;Correzione Core&#10;Correzione MCTS&#10;Implementazione caso di studio: Tris">
+      <option name="closed" value="true" />
+      <created>1719429679593</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1719429679593</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -275,15 +318,26 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Seconda Iterazione:&#10;Correzione Core&#10;Correzione MCTS&#10;Implementazione caso di studio: Tris" />
+    <option name="LAST_COMMIT_MESSAGE" value="Seconda Iterazione:&#10;Correzione Core&#10;Correzione MCTS&#10;Implementazione caso di studio: Tris" />
+  </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/crm/CFRMAlgorithm.java</url>
-          <line>83</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="java.util.HashMap$Node" memberName="key" />
+        <PinnedItemInfo parentTag="com.lostrucos.jabtbg.algorithms.mcts.MCTSAlgorithm" memberName="agent" />
+        <PinnedItemInfo parentTag="com.lostrucos.jabtbg.algorithms.mcts.MCTSAlgorithm" memberName="numIterations" />
+        <PinnedItemInfo parentTag="java.util.HashMap$Node" memberName="value" />
+        <PinnedItemInfo parentTag="com.lostrucos.jabtbg.algorithms.mcts.MCTSAlgorithm" memberName="rootNode" />
+      </pinned-members>
+    </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="GradleRunConfiguration">
+        <watch expression="leafNode" />
+        <watch expression="rewards" />
+        <watch expression="((HashMap.Node)((HashMap)node.childNodes).entrySet().toArray()[0]).getKey()" custom="java.util.HashMap.Node,java.util.HashMap" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

@@ -2,7 +2,7 @@ package com.lostrucos.jabtbg.core;
 
 import java.util.List;
 
-public abstract class AbstractGame implements Game {
+public abstract class AbstractGame<T extends GameState<E>, E extends Action> implements Game<T, E> {
     private final int playerCount;
 
     protected AbstractGame(int playerCount) {
@@ -15,17 +15,11 @@ public abstract class AbstractGame implements Game {
     }
 
     @Override
-    public abstract GameState getInitialState();
+    public abstract T getInitialState();
+
 
     @Override
-    public abstract List<Action> getPlayerActions(int player, GameState state);
+    public abstract T getNextState(T state, List<E> actions);
 
-    @Override
-    public abstract GameState getNextState(GameState state, List<Action> actions);
-
-    @Override
-    public abstract boolean isTerminal(GameState state);
-
-    @Override
-    public abstract double getUtility(GameState state, int player);
+    //TODO: devo aggiungere i metodi di game? Boh da vedere
 }
