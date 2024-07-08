@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Minimax implements Algorithm {
     private Game game;
-    private Agent agent;
+    private Player player;
     private int playerIndex;
     private int maxDepth;
 
@@ -15,10 +15,10 @@ public class Minimax implements Algorithm {
     }
 
     @Override
-    public void initialize(Game game, Agent agent) {
+    public void initialize(Game game, Player player) {
         this.game = game;
-        this.agent = agent;
-        this.playerIndex = agent.getPlayerIndex();
+        this.player = player;
+        this.playerIndex = player.getPlayerIndex();
     }
 
     @Override

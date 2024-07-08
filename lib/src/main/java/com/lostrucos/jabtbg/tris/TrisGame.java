@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TrisGame extends AbstractGame<TrisGameState, TrisAction> implements Game<TrisGameState, TrisAction> {
-    private final List<Agent<TrisGameState, TrisAction>> players;
+    private final List<com.lostrucos.jabtbg.core.Player<TrisGameState, TrisAction>> players;
     private TrisGameState currentState;
     private int currentPlayer; //id del giocatore di turno;
     private final BasicUtilityStrategy utilityStrategy;

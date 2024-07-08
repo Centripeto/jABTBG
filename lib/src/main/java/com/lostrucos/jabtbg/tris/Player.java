@@ -1,10 +1,8 @@
 package com.lostrucos.jabtbg.tris;
 
-import com.lostrucos.jabtbg.core.Agent;
-
 import java.util.Scanner;
 
-public class Player implements Agent<TrisGameState, TrisAction> {
+public class Player implements com.lostrucos.jabtbg.core.Player<TrisGameState, TrisAction> {
     private final int id;
 
     public Player(int id) {

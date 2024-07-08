@@ -1,10 +1,10 @@
 package com.lostrucos.jabtbg.tris;
 
-import com.lostrucos.jabtbg.core.Agent;
+import com.lostrucos.jabtbg.core.Player;
 import com.lostrucos.jabtbg.core.Algorithm;
 import com.lostrucos.jabtbg.core.UtilityStrategy;
 
-public class MCTSPlayer implements Agent<TrisGameState, TrisAction> {
+public class MCTSPlayer implements Player<TrisGameState, TrisAction> {
     private final int id;
     private final Algorithm<TrisGameState, TrisAction> algorithm;
 

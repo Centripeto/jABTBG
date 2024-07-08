@@ -3,7 +3,7 @@ package com.lostrucos.jabtbg.core;
 /**
  * Represents an agent (player) in the game.
  */
-public interface Agent<T extends GameState<E>, E extends Action> {
+public interface Player<T extends GameState<E>, E extends Action> {
     /**
      * Returns the index of the player this agent is controlling.
      *

@@ -30,7 +30,7 @@ public class MCTSAlgorithm<E extends Action, T extends GameState<E>> implements 
     }
 
     @Override
-    public void initialize(Game<T, E> game, Agent<T, E> agent) {}
+    public void initialize(Game<T, E> game, Player<T, E> player) {}
 
     /**
      * Initializes the algorithm with the given game and agent.

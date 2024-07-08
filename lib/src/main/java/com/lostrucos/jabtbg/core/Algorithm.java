@@ -59,8 +59,8 @@ public interface Algorithm<T extends GameState<E>, E extends Action> {
      * Initializes the algorithm with the given game and agent.
      *
      * @param game  the game to be played.
-     * @param agent the agent using this algorithm.
+     * @param player the agent using this algorithm.
      */
-    void initialize(Game<T, E> game, Agent<T, E> agent); //come specificato, è l'agent che utilizza l'algoritmo e non viceversa
+    void initialize(Game<T, E> game, Player<T, E> player); //come specificato, è l'agent che utilizza l'algoritmo e non viceversa
     //altro punto, all'algoritmo serve game o gamestate?
 }

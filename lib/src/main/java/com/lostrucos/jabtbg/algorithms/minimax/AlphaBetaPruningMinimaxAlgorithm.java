@@ -6,12 +6,12 @@ import java.util.List;
 
 public class AlphaBetaPruningMinimaxAlgorithm implements Algorithm {
     private Game game;
-    private Agent agent;
+    private Player player;
 
     @Override
-    public void initialize(Game game, Agent agent) {
+    public void initialize(Game game, Player player) {
         this.game = game;
-        this.agent = agent;
+        this.player = player;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class AlphaBetaPruningMinimaxAlgorithm implements Algorithm {
 
     @Override
     public Action chooseAction(GameState gameState) {
-        return alphaBetaMinimaxDecision(gameState, agent.getPlayerIndex() % 2 == 0);
+        return alphaBetaMinimaxDecision(gameState, player.getPlayerIndex() % 2 == 0);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class AlphaBetaPruningMinimaxAlgorithm implements Algorithm {
 
 
     private Action alphaBetaMinimaxDecision(GameState gameState, boolean isMaximizing) {
-        List<? extends Action> actions = game.getPlayerActions(agent.getPlayerIndex(), gameState);
+        List<? extends Action> actions = game.getPlayerActions(player.getPlayerIndex(), gameState);
         Action bestAction = null;
         double bestValue = isMaximizing ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY;
         double alpha = Double.NEGATIVE_INFINITY;
@@ -80,11 +80,11 @@ public class AlphaBetaPruningMinimaxAlgorithm implements Algorithm {
 
     double alphaBetaMinimax(GameState gameState, double alpha, double beta, boolean isMaximizing) {
         if (gameState.isTerminalNode()) {
-            return gameState.getUtility(agent.getPlayerIndex());
+            return gameState.getUtility(player.getPlayerIndex());
         }
 
         double value = isMaximizing ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY;
-        List<? extends Action> actions = game.getPlayerActions(agent.getPlayerIndex(), gameState);
+        List<? extends Action> actions = game.getPlayerActions(player.getPlayerIndex(), gameState);
 
         for (Action action : actions) {
             GameState newState = action.applyAction(gameState);

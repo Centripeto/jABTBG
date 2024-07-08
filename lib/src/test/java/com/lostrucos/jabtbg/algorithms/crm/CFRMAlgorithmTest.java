@@ -11,7 +11,7 @@ import static org.mockito.Mockito.*;
 
 class CFRMAlgorithmTest {
     private Game mockGame;
-    private Agent mockAgent;
+    private Player mockPlayer;
     private GameState mockInitialState;
     private GameState mockNextState;
     private Action mockAction;
@@ -21,7 +21,7 @@ class CFRMAlgorithmTest {
     @BeforeEach
     void setUp() {
         mockGame = mock(Game.class);
-        mockAgent = mock(Agent.class);
+        mockPlayer = mock(Player.class);
         mockInitialState = mock(GameState.class);
         mockNextState = mock(GameState.class);
         mockAction = mock(Action.class);
@@ -38,7 +38,7 @@ class CFRMAlgorithmTest {
         when(mockNextState.isTerminalNode()).thenReturn(true);
 
         cfrmAlgorithm = new CFRMAlgorithm(1000, 0.1);
-        cfrmAlgorithm.initialize(mockGame, mockAgent);
+        cfrmAlgorithm.initialize(mockGame, mockPlayer);
     }
 
     @Test

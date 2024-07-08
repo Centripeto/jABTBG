@@ -10,7 +10,7 @@ import java.util.*;
  */
 public class CFRMAlgorithm implements Algorithm {
     private Game game;
-    private Agent agent;
+    private Player player;
     private final int numIterations;
     private final double regretMatchingWeight;
     private Map<InformationSet, Map<Action, Double>> regretTable;
@@ -30,9 +30,9 @@ public class CFRMAlgorithm implements Algorithm {
     }
 
     @Override
-    public void initialize(Game game, Agent agent) {
+    public void initialize(Game game, Player player) {
         this.game = game;
-        this.agent = agent;
+        this.player = player;
     }
 
     @Override
@@ -156,7 +156,7 @@ public class CFRMAlgorithm implements Algorithm {
      */
     double trainRecursive(GameState state, double weight) {
         if (game.isTerminal(state)) {
-            return weight * game.getUtility(state, agent.getPlayerIndex());
+            return weight * game.getUtility(state, player.getPlayerIndex());
         }
 
         int playerIndex = state.getCurrentPlayer();
