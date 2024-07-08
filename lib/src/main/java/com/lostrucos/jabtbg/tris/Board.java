@@ -4,7 +4,7 @@ package com.lostrucos.jabtbg.tris;
  * This class represent the board in the game of tic-tac-toe
  */
 public class Board {
-    private Symbol[][] board;
+    private final Symbol[][] board;
 
     public Board() {
         board = new Symbol[3][3];

@@ -18,8 +18,15 @@ public interface Agent<T extends GameState<E>, E extends Action> {
      */
     String toString();
 
-    // Restituisce l'azione che l'agente sceglierà di eseguire nello stato di gioco specificato.
+    /**
+     * Method that allows the agent to choose an action between the ones available in the given state
+     * @param state the current state
+     * @return the action selected by the agent
+     */
     E getAction(T state);
+
+
+
 
     // Consente all'agente di aggiornare il suo stato interno dopo che un'azione è stata eseguita nello stato di gioco specificato.
     void updateAfterAction(T state, E action); //In pratica l'agente aggiorna il suo information set, questo è il succo

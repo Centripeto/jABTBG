@@ -10,10 +10,10 @@ import java.util.List;
  */
 public class TrisGameState implements GameState<TrisAction> {
 
-    private Board board;
+    private final Board board;
     private int currentPlayer;
     private boolean isTie = false;
-    private BasicUtilityStrategy utilityStrategy;
+    private final BasicUtilityStrategy utilityStrategy;
 
     public TrisGameState(Board board, int currentPlayer, BasicUtilityStrategy utilityStrategy) {
         this.board = board;

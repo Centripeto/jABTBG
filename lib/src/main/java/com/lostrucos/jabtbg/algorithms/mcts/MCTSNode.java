@@ -9,9 +9,9 @@ import java.util.*;
  * Represents a node in the Monte Carlo Tree Search (MCTS) algorithm.
  */
 public class MCTSNode<T extends GameState<E>, E extends Action> {
-    private T state;
-    private MCTSNode<T, E> parentNode;
-    private Map<E, MCTSNode<T, E>> childNodes;
+    private final T state;
+    private final MCTSNode<T, E> parentNode;
+    private final Map<E, MCTSNode<T, E>> childNodes;
     private double totalReward;
     private int visitCount;
 

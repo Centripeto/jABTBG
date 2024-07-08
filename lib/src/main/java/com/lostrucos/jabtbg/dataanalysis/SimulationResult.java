@@ -6,11 +6,11 @@ import com.lostrucos.jabtbg.core.GameState;
 import java.util.List;
 import java.util.Map;
 
-public class SimulationResult<T extends GameState<E>, E extends Action> {
-    private List<E> actions;
-    private Map<Integer, Long> decisionTimes;
-    private Map<String, Object> collectedData;
-    private T finalState;
+public abstract class SimulationResult<T extends GameState<E>, E extends Action> {
+    private final List<E> actions;
+    private final Map<Integer, Long> decisionTimes;
+    private final Map<String, Object> collectedData;
+    private final T finalState;
 
     public SimulationResult(List<E> actions, Map<Integer, Long> decisionTimes, Map<String, Object> collectedData, T finalState) {
         this.actions = actions;

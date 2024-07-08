@@ -10,7 +10,7 @@ public class TrisGame extends AbstractGame<TrisGameState, TrisAction> implements
     private final List<Agent<TrisGameState, TrisAction>> players;
     private TrisGameState currentState;
     private int currentPlayer; //id del giocatore di turno;
-    private BasicUtilityStrategy utilityStrategy;
+    private final BasicUtilityStrategy utilityStrategy;
 
     public TrisGame(int playerCount) {
         super(playerCount);

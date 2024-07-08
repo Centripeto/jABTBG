@@ -44,10 +44,18 @@ public interface GameState<E extends Action>{
      */
     GameState<E> deepCopy();
 
-    // Restituisce una lista degli indici dei giocatori coinvolti in questo stato di gioco.
+    /**
+     * Returns a list of all the indexes of the players still in game in this game state
+     * @return the indexes of the players still in game
+     */
     List<Integer> getPlayersInGame();
 
-    // Restituisce un valore booleano che indica se il giocatore specificato è ancora presente in gioco (non eliminato) in questo stato di gioco.
+    /**
+     * Method that tells wheter a player, represented by his index, is still in the game in this game state
+     * @param player the index of the player
+     * @return true if the player is still in the game
+     *         false otherwise
+     */
     boolean isPlayerStillInGame(int player);
 
     /**
@@ -57,7 +65,17 @@ public interface GameState<E extends Action>{
      */
     String toString();
 
-    List<E> getAvailableActions(int playerIndex);  //restituisce le azioni disponibili per un giocatore in questo stato
+    /**
+     * Method that returns a list of all the available actions in this game state for the given player
+     * @param playerIndex the index of the player
+     * @return the actions available to that player for this game state
+     */
+    List<E> getAvailableActions(int playerIndex);
 
+    /**
+     * Utility function that gives us the utility for the given player in this game state
+     * @param playerIndex the index of the player
+     * @return the utility the player receives
+     */
     double getUtility(int playerIndex);
 }

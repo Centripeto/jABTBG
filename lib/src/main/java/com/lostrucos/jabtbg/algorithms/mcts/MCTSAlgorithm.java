@@ -11,7 +11,7 @@ public class MCTSAlgorithm<E extends Action, T extends GameState<E>> implements 
 
     private final int numIterations;
     private final double explorationConstant;
-    private Map<T, MCTSNode<T, E>> gameTree;
+    private final Map<T, MCTSNode<T, E>> gameTree;
     private MCTSNode<T, E> rootNode;
     private UtilityStrategy<T, E> utilityStrategy;
 
