@@ -15,6 +15,14 @@ public interface GameState<E extends Action>{
     int getCurrentPlayer();
 
     /**
+     * Applies this action to the given game state and returns the resulting game state.
+     *
+     * @param action the current state of the game.
+     * @return the resulting game state after the action is applied.
+     */
+    GameState applyAction(Action action);
+
+    /**
      * Checks if the current state is a terminal node.
      *
      * @return true if this state is a terminal node, false otherwise.
