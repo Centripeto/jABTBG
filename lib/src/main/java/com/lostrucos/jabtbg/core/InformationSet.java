@@ -3,18 +3,14 @@ package com.lostrucos.jabtbg.core;
 import java.util.List;
 
 /**
- * Represents the information set for a player in a particular point of the game.
+ * Represents the information set known to a player in a given state of the game.
  */
-public interface InformationSet {
-    /**
-     * Returns a representation of the information set.
-     *
-     * @return a string representation of the information set.
-     */
-    String toString();
+public interface InformationSet<T extends GameState<E>, E extends Action> {
 
     /**
-     * @return The index of the player to which this set of information belongs.
+     * Returns the index of the player to which this set of information belongs.
+     *
+     * @return the index of the player
      */
     int getPlayerIndex();
 
@@ -23,27 +19,42 @@ public interface InformationSet {
      *
      * @return a pseudo-state.
      */
-    GameState determinePseudoState();
+    T determinePseudoState();
 
     /**
      * Returns a list of possible game states consistent with the information available to the player.
      *
      * @return the list of possible game states.
      */
-    List<GameState> getPossibleStates();
+    List<T> getPossibleStates();
 
-    // Restituisce una lista delle azioni valide per il giocatore associato a questo insieme di informazioni.
-    List<Action> getPlayerActions();
+    /**
+     * Returns a list of valid actions game states consistent with the information available to the player.
+     *
+     * @param playerIndex the index of the player
+     * @return the list of possible game states.
+     */
+    List<E> getPlayerActions(int playerIndex);
 
-    // Restituisce il nuovo insieme di informazioni risultante dall'applicazione dell'azione specificata.
-    InformationSet getNextInformationSet(Action action);
+    /**
+     * Returns the new set of information resulting from the application of the specified action.
+     *
+     * @param action the action that generate the new information set
+     * @return the new information set
+     */
+    InformationSet<T, E> getNextInformationSet(E action);
 
-    // Restituisce un valore booleano che indica se questo insieme di informazioni rappresenta uno stato terminale del gioco.
+    /**
+     * Checks if the current information state is a terminal node.
+     *
+     * @return true if this state is a terminal information set, false otherwise.
+     */
     boolean isTerminal();
 
-    // Restituisce l'utilità (punteggio o ricompensa) per il giocatore specificato se questo insieme di informazioni rappresenta uno stato terminale.
-    double getUtility(int player);
-
-    // Restituisce l'utilità media per il giocatore associato a questo insieme di informazioni, calcolata su tutti gli stati di gioco possibili.
-    double getAverageUtility();
+    /**
+     * Returns a representation of the information set.
+     *
+     * @return a string representation of the information set.
+     */
+    String toString();
 }

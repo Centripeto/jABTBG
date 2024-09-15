@@ -20,7 +20,7 @@ public class MinimaxAlgorithm implements Algorithm {
     }
 
     @Override
-    public void setUtilityStrategy(UtilityStrategy strategy) {
+    public void setStrategy(Strategy strategy) {
 
     }
 
@@ -40,8 +40,7 @@ public class MinimaxAlgorithm implements Algorithm {
     }
 
     @Override
-    public GameState applyPseudoAction(GameState state, Action action) {
-        return null;
+    public void applyPseudoAction(GameState state, Action action) {
     }
 
     private Action minimaxDecision(GameState gameState, boolean isMaximizing) {

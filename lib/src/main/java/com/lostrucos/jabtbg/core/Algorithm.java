@@ -1,9 +1,10 @@
 package com.lostrucos.jabtbg.core;
 
 /**
- * Represents an algorithm used by an agent to decide actions in the game.
+ * Represents an algorithm used by an agent in order to take the best action during the game.
  */
 public interface Algorithm<T extends GameState<E>, E extends Action> {
+
     /**
      * Initializes the algorithm with the given state of the game
      *
@@ -12,14 +13,14 @@ public interface Algorithm<T extends GameState<E>, E extends Action> {
     void initialize(T state);
 
     /**
-     * Sets the strategy.
-     */
-    void setUtilityStrategy(UtilityStrategy<T, E> strategy);
-
-    /**
-     * Resets the algorithm internal information
+     * Resets the algorithm internal information.
      */
     void reset();
+
+    /**
+     * Sets the strategy.
+     */
+    void setStrategy(Strategy<T, E> strategy);
 
     /**
      * Returns the action chosen by the algorithm for the given game state.
@@ -30,19 +31,20 @@ public interface Algorithm<T extends GameState<E>, E extends Action> {
     E chooseAction(T gameState);
 
     /**
-     * Applies a pseudo action to a game state during the simulation. The original game state is not modified
+     * Applies a pseudo action to a game state during the simulation.
+     * Using this function, the original state of the game remains unchanged and no changes are made.
+     * To ensure data invariability, a deep copy of the node represented by the state from which the action will be applied is first performed.
      *
-     * @param state  the current state of the simulation, not the actual game state
+     * @param state the current state of the simulation, not the actual game state
      * @param action the action to apply
-     * @return the new state after applying the action
      */
-    GameState<E> applyPseudoAction(T state, E action);
+    void applyPseudoAction(T state, E action);
 
     /**
      * Updates the algorithm's internal state after an action has been taken.
      *
      * @param gameState the new state of the game.
-     * @param action    the action that was taken.
+     * @param action the action that was taken.
      */
     void updateAfterAction(T gameState, E action);
 
@@ -52,15 +54,4 @@ public interface Algorithm<T extends GameState<E>, E extends Action> {
      * @return a string representation of the algorithm.
      */
     String toString();
-
-
-
-    /**
-     * Initializes the algorithm with the given game and agent.
-     *
-     * @param game  the game to be played.
-     * @param player the agent using this algorithm.
-     */
-    void initialize(Game<T, E> game, Player<T, E> player); //come specificato, è l'agent che utilizza l'algoritmo e non viceversa
-    //altro punto, all'algoritmo serve game o gamestate?
 }

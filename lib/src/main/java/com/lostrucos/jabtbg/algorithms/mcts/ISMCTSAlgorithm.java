@@ -50,7 +50,7 @@ public class ISMCTSAlgorithm implements Algorithm {
     }
 
     @Override
-    public void setUtilityStrategy(UtilityStrategy strategy) {
+    public void setStrategy(Strategy strategy) {
 
     }
 
@@ -89,8 +89,7 @@ public class ISMCTSAlgorithm implements Algorithm {
     }
 
     @Override
-    public GameState applyPseudoAction(GameState state, Action action) {
-        return null;
+    public void applyPseudoAction(GameState state, Action action) {
     }
 
 

@@ -13,7 +13,7 @@ public class MCTSAlgorithm<E extends Action, T extends GameState<E>> implements 
     private final double explorationConstant;
     private final Map<T, MCTSNode<T, E>> gameTree;
     private MCTSNode<T, E> rootNode;
-    private UtilityStrategy<T, E> utilityStrategy;
+    private Strategy<T, E> strategy;
 
     private static final long TIME_LIMIT_MS = 10000; // 10 secondi
 
@@ -29,9 +29,6 @@ public class MCTSAlgorithm<E extends Action, T extends GameState<E>> implements 
         this.gameTree = new HashMap<>();
     }
 
-    @Override
-    public void initialize(Game<T, E> game, Player<T, E> player) {}
-
     /**
      * Initializes the algorithm with the given game and agent.
      * Initializes also the game tree and its root node.
@@ -46,8 +43,8 @@ public class MCTSAlgorithm<E extends Action, T extends GameState<E>> implements 
     }
 
     @Override
-    public void setUtilityStrategy(UtilityStrategy<T, E> strategy) {
-        this.utilityStrategy = strategy;
+    public void setStrategy(Strategy<T, E> strategy) {
+        this.strategy = strategy;
     }
 
     @Override
@@ -87,8 +84,8 @@ public class MCTSAlgorithm<E extends Action, T extends GameState<E>> implements 
     }
 
     @Override
-    public GameState<E> applyPseudoAction(T state, E action) {
-        return state.applyAction(action);
+    public void applyPseudoAction(T state, E action) {
+        state.applyAction(action);
     }
 
     /**
@@ -135,9 +132,8 @@ public class MCTSAlgorithm<E extends Action, T extends GameState<E>> implements 
         return expandedNode;
     }
 
-    public MCTSNode<T, E> getOrCreateChild(MCTSNode<T, E> node, E action) {
-        MCTSNode<T, E> child = node.getChildNodes().computeIfAbsent(action, a -> new MCTSNode<T, E>((T) node.getState().deepCopy(), node));
-        return child;
+    private MCTSNode<T, E> getOrCreateChild(MCTSNode<T, E> node, E action) {
+        return node.getChildNodes().computeIfAbsent(action, a -> new MCTSNode<T, E>((T) node.getState().deepCopy(), node));
     }
 
     /**
@@ -153,7 +149,7 @@ public class MCTSAlgorithm<E extends Action, T extends GameState<E>> implements 
             E randomAction = actions.get(new Random().nextInt(actions.size()));
             this.applyPseudoAction(terminalNode.getState(), randomAction);
         }
-        return utilityStrategy.calculateUtility(terminalNode.getState(), node.getState().getCurrentPlayer());
+        return strategy.calculateUtility(terminalNode.getState(), node.getState().getCurrentPlayer());
     }
 
     /**
@@ -178,7 +174,6 @@ public class MCTSAlgorithm<E extends Action, T extends GameState<E>> implements 
      */
     private E getBestAction(MCTSNode<T, E> node) {
         if (node.getChildNodes().isEmpty()) {
-            // Se non ci sono figli, restituisci un'azione casuale dallo stato corrente
             List<E> availableActions = node.getState().getAvailableActions(node.getState().getCurrentPlayer());
             return availableActions.get(new Random().nextInt(availableActions.size()));
         }

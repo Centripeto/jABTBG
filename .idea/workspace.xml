@@ -5,23 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9ab4c8fc-b31e-4c6d-8870-e679e6ccb3a4" name="Changes" comment="Seconda Iterazione:&#10;Correzione Core&#10;Correzione MCTS&#10;Implementazione caso di studio: Tris">
+      <change afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/crm/CFRMAgent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/crm/CFRMAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/crm/CFRMAlgorithm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/mcts/ISMCTSAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/mcts/ISMCTSAlgorithm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/mcts/MCTSAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/mcts/MCTSAlgorithm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/minimax/AlphaBetaPruningMinimaxAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/minimax/AlphaBetaPruningMinimaxAlgorithm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/minimax/Minimax.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/minimax/Minimax.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/minimax/MinimaxAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/algorithms/minimax/MinimaxAlgorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/AbstractGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/AbstractGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/Action.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/Action.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/Algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/Algorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/dataanalysis/SimulationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/dataanalysis/SimulationManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/GameState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/InformationSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/InformationSet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/UtilityStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/core/Strategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/BasicUtilityStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/BasicStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/MCTSPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/MCTSPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/TrisGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/TrisGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jabtbg/algorithms/crm/CFRMAlgorithmTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jabtbg/algorithms/crm/CFRMAlgorithmTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jabtbg/algorithms/minimax/AlphaBetaPruningMinimaxAlgorithmTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jabtbg/algorithms/minimax/AlphaBetaPruningMinimaxAlgorithmTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jabtbg/algorithms/minimax/MinimaxAlgorithmTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/com/lostrucos/jabtbg/algorithms/minimax/MinimaxAlgorithmTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/TrisGameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/lostrucos/jabtbg/tris/TrisGameState.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,17 +51,6 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="jABTBG" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="jABTBG" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="jABTBG" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -154,7 +146,7 @@
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4&quot;: &quot;&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Third-iteration&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/Giovanni/Desktop/TicTacToe&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -271,11 +263,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ISMCTSAlgorithmTest.testSelectLeafNode" />
+        <item itemvalue="JUnit.BoardTest" />
+        <item itemvalue="Gradle.jICIG [clean]" />
         <item itemvalue="Gradle.jABTBG [build]" />
         <item itemvalue="Application.Prova" />
-        <item itemvalue="JUnit.BoardTest" />
-        <item itemvalue="JUnit.ISMCTSAlgorithmTest.testSelectLeafNode" />
-        <item itemvalue="Gradle.jICIG [clean]" />
       </list>
     </recent_temporary>
   </component>

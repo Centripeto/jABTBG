@@ -13,9 +13,9 @@ public class TrisGameState implements GameState<TrisAction> {
     private final Board board;
     private int currentPlayer;
     private boolean isTie = false;
-    private final BasicUtilityStrategy utilityStrategy;
+    private final BasicStrategy utilityStrategy;
 
-    public TrisGameState(Board board, int currentPlayer, BasicUtilityStrategy utilityStrategy) {
+    public TrisGameState(Board board, int currentPlayer, BasicStrategy utilityStrategy) {
         this.board = board;
         this.currentPlayer = currentPlayer;
         this.utilityStrategy = utilityStrategy;
@@ -74,7 +74,6 @@ public class TrisGameState implements GameState<TrisAction> {
         return availableActions;
     }
 
-    //Qua devo verificare se board ha una configurazione finale o meno
     @Override
     public boolean isTerminalNode() {
         if (checkRow() || checkColumns() || checkDiagonals())
@@ -203,13 +202,11 @@ public class TrisGameState implements GameState<TrisAction> {
         return false;
     }
 
-    //non viene utilizzato nel tris
     @Override
     public List<Integer> getPlayersInGame() {
         return null;
     }
 
-    //non viene utilizzato nel tris
     @Override
     public boolean isPlayerStillInGame(int player) {
         return false;

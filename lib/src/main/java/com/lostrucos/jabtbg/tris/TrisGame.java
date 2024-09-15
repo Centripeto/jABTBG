@@ -10,14 +10,14 @@ public class TrisGame extends AbstractGame<TrisGameState, TrisAction> implements
     private final List<com.lostrucos.jabtbg.core.Player<TrisGameState, TrisAction>> players;
     private TrisGameState currentState;
     private int currentPlayer; //id del giocatore di turno;
-    private final BasicUtilityStrategy utilityStrategy;
+    private final BasicStrategy utilityStrategy;
 
     public TrisGame(int playerCount) {
         super(playerCount);
-        currentState = new TrisGameState(new Board(), 0, new BasicUtilityStrategy());
+        currentState = new TrisGameState(new Board(), 0, new BasicStrategy());
         currentPlayer = 0;
         players = new ArrayList<>();
-        utilityStrategy = new BasicUtilityStrategy();
+        utilityStrategy = new BasicStrategy();
         initializePlayers();
     }
 
@@ -50,11 +50,6 @@ public class TrisGame extends AbstractGame<TrisGameState, TrisAction> implements
     }
 
     @Override
-    public TrisGameState getCurrentState() {
-        return currentState;
-    }
-
-    @Override
     public TrisGameState getNextState(TrisGameState state, TrisAction action) {
         switch (currentPlayer) {
             case 0:
@@ -69,43 +64,13 @@ public class TrisGame extends AbstractGame<TrisGameState, TrisAction> implements
         return state;
     }
 
-    //TODO: Da levare
-    @Override
-    public List<TrisAction> getPlayerActions(int playerIndex, TrisGameState gameState) {
-        return null;
-    }
-
     @Override
     public int getCurrentPlayer() {
         return currentPlayer;
     }
 
-    //TODO: da levare
     @Override
-    public boolean isTerminal(GameState state) {
-        return false;
-    }
-
-    //TODO: da levare
-    @Override
-    public double getUtility(GameState state, int playerIndex) {
-        return 0;
-    }
-
-    //Non serve al tris
-    @Override
-    public InformationSet getInformationSet(int playerIndex, TrisGameState gameState) {
-        return null;
-    }
-
-    @Override
-    public TrisGameState getNextState(TrisGameState state, List<TrisAction> actions) {
-        return null;
-    }
-
-    //TODO: da levare
-    @Override
-    public TrisGameState getInitialState() {
+    public InformationSet<TrisGameState, TrisAction> getInformationSet(int playerIndex, TrisGameState gameState) {
         return null;
     }
 }

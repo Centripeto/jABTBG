@@ -6,21 +6,23 @@ import java.util.*;
 
 /**
  * Implementation of the Counterfactual Regret Minimization (CFR) Algorithm.
- * This algorithm is used for finding approximate Nash equilibria in games of imperfect information.
+ * This algorithm is used for finding approximate Nash equilibrium in games of imperfect-but-complete-information.
  */
-public class CFRMAlgorithm implements Algorithm {
-    private Game game;
-    private Player player;
+public class CFRMAlgorithm<T extends GameState<E>, E extends Action> implements Algorithm<T, E> {
+    private Game<T, E> game;
     private final int numIterations;
     private final double regretMatchingWeight;
-    private Map<InformationSet, Map<Action, Double>> regretTable;
-    private Map<InformationSet, Map<Action, Double>> strategyTable;
+    private Map<InformationSet<T, E>, Map<E, Double>> regretTable;
+    private Map<InformationSet<T, E>, Map<E, Double>> strategyTable;
+    private Strategy<T, E> strategy;
+
+    private static final long TIME_LIMIT_MS = 10000; // 10 secondi
 
     /**
      * Constructs a new CFRMAlgorithm.
      *
-     * @param numIterations         the number of iterations for the training process.
-     * @param regretMatchingWeight  the weight used in the regret matching process.
+     * @param numIterations the number of iterations for the training process.
+     * @param regretMatchingWeight the weight used in the regret matching process.
      */
     public CFRMAlgorithm(int numIterations, double regretMatchingWeight) {
         this.numIterations = numIterations;
@@ -30,24 +32,17 @@ public class CFRMAlgorithm implements Algorithm {
     }
 
     @Override
-    public void initialize(Game game, Player player) {
-        this.game = game;
-        this.player = player;
-    }
+    public void initialize(T state) {}
 
     @Override
-    public void initialize(GameState state) {
-
-    }
-
-    @Override
-    public void setUtilityStrategy(UtilityStrategy strategy) {
-
+    public void setStrategy(Strategy<T, E> strategy) {
+        this.strategy = strategy;
     }
 
     @Override
     public void reset() {
-
+        regretTable.clear();
+        strategyTable.clear();
     }
 
     /**
@@ -57,23 +52,91 @@ public class CFRMAlgorithm implements Algorithm {
      * @return the chosen action.
      */
     @Override
-    public Action chooseAction(GameState state) {
-        InformationSet infoSet = state.getInformationSet(state.getCurrentPlayer());
-        Map<Action, Double> strategy = getStrategy(infoSet);
+    public E chooseAction(T state) {
+        long startTime = System.currentTimeMillis();
+
+        InformationSet<T, E> infoSet = game.getInformationSet(state.getCurrentPlayer(), state);
+        Map<E, Double> strategy = getStrategy(infoSet);
         return selectAction(strategy);
     }
 
     @Override
-    public void updateAfterAction(GameState state, Action action) {
-        // No operation needed
-    }
+    public void updateAfterAction(T state, E action) {train(state);}
 
     @Override
-    public GameState applyPseudoAction(GameState state, Action action) {
-        return null;
+    public void applyPseudoAction(T state, E action) {game.getNextState(state, action);}
+
+    /**
+     * Chooses an action within the player's strategy based on the probabilities.
+     *
+     * @param strategy the player's current strategy.
+     * @return the chosen action.
+     */
+    private E selectAction(Map<E, Double> strategy) {
+        Random random = new Random();
+        double randomValue = random.nextDouble();
+        double cumulativeProbability = 0.0;
+        for (Map.Entry<E, Double> entry : strategy.entrySet()) {
+            cumulativeProbability += entry.getValue();
+            if (randomValue < cumulativeProbability) {
+                return entry.getKey();
+            }
+        }
+        return strategy.keySet().iterator().next(); // Fallback to first action
     }
 
+    /**
+     * Starts training the algorithm by performing the specified number of iterations.
+     */
+    private void train(T initialState) {
+        int iterations = 0;
 
+        for (int i = 0; i < numIterations; i++) {
+            //while(System.currentTimeMillis() - startTime < TIME_LIMIT_MS && iterations < numIterations) {
+            //iterations++;
+            for (int player = 0; player < 2; player++) {
+                cfrm(initialState, player, 1.0, 1.0);
+            }
+        }
+        //System.out.println("CFRMAlgorithm completed " + iterations + " iterations in " + (System.currentTimeMillis() - startTime) + "ms");
+    }
+
+    /**
+     * Performs recursively all the operation of the cfrm algorithm and returns the utility.
+     *
+     * @return the utility value.
+     */
+    private double cfrm(T state, int player, double reachProbability, double opponentProbability) {
+        if (state.isTerminalNode()) {
+            return state.getUtility(player);
+        }
+
+        int currentPlayer = state.getCurrentPlayer();
+        InformationSet<T, E> infoSet = game.getInformationSet(currentPlayer, state);
+
+        Map<E, Double> strategy = getStrategy(infoSet);
+        Map<E, Double> utilities = new HashMap<>();
+        double expectedUtility = 0;
+
+        for (E action : infoSet.getPlayerActions(currentPlayer)) {
+            double newReachProb = (currentPlayer == player) ? reachProbability : opponentProbability;
+            double actionProbability = strategy.get(action);
+            T nextState = game.getNextState(state, action);
+            double utility = cfrm(nextState, player, reachProbability * actionProbability, opponentProbability * actionProbability);
+            utilities.put(action, utility);
+            expectedUtility += actionProbability * utility;
+        }
+
+        if (currentPlayer == player) {
+            for (E action : infoSet.getPlayerActions(currentPlayer)) {
+                double regret = utilities.get(action) - expectedUtility;
+                updateRegretSum(infoSet, action, regret * opponentProbability);
+            }
+        }
+
+        return expectedUtility;
+    }
+    
     /**
      * Obtains the strategy for a given player.
      * If not already drafted, initializes a new strategy.
@@ -81,8 +144,8 @@ public class CFRMAlgorithm implements Algorithm {
      * @param infoSet the player's current information set.
      * @return the player's current strategy.
      */
-    Map<Action, Double> getStrategy(InformationSet infoSet) {
-        Map<Action, Double> strategy = strategyTable.get(infoSet);
+    private Map<E, Double> getStrategy(InformationSet<T, E> infoSet) {
+        Map<E, Double> strategy = strategyTable.get(infoSet);
         if (strategy == null) {
             strategy = initializeStrategy(infoSet);
             strategyTable.put(infoSet, strategy);
@@ -97,116 +160,53 @@ public class CFRMAlgorithm implements Algorithm {
      * @param infoSet the player's current information set.
      * @return the initial strategy.
      */
-    Map<Action, Double> initializeStrategy(InformationSet infoSet) {
-        //Optional<GameState> firstKey = gameTree.keySet().stream().findFirst();
-        //rootNode = firstKey.map(informationSet -> gameTree.get(informationSet)).orElse(null);
+    private Map<E, Double> initializeStrategy(InformationSet<T, E> infoSet) {
+        Map<E, Double> strategy = new HashMap<>();
+        double normalizingSum = 0;
 
-        Map<Action, Double> strategy = new HashMap<>();
-        List<Action> actions = game.getPlayerActions(infoSet.getPlayerIndex(), infoSet.getPossibleStates().get(0));
-        double weight = 1.0 / actions.size();
-        for (Action action : actions) {
-            strategy.put(action, weight);
+        for (E action : infoSet.getPlayerActions(infoSet.getPlayerIndex())) {
+            strategy.put(action, Math.max(regretTable.getOrDefault(infoSet, new HashMap<>()).getOrDefault(action, 0.0), 0.0));
+            normalizingSum += strategy.get(action);
         }
-        return strategy;
-    }
 
-    /**
-     * Chooses an action within the player's strategy based on the probabilities.
-     *
-     * @param strategy the player's current strategy.
-     * @return the chosen action.
-     */
-    Action selectAction(Map<Action, Double> strategy) {
-        Random random = new Random();
-        double randomValue = random.nextDouble();
-        double cumulativeProbability = 0.0;
-        for (Map.Entry<Action, Double> entry : strategy.entrySet()) {
-            cumulativeProbability += entry.getValue();
-            if (randomValue < cumulativeProbability) {
-                return entry.getKey();
+        if (normalizingSum > 0) {
+            for (E action : strategy.keySet()) {
+                strategy.put(action, strategy.get(action) / normalizingSum);
+            }
+        } else {
+            double uniformProbability = 1.0 / infoSet.getPlayerActions(infoSet.getPlayerIndex()).size();
+            for (E action : infoSet.getPlayerActions(infoSet.getPlayerIndex())) {
+                strategy.put(action, uniformProbability);
             }
         }
-        throw new IllegalStateException("Invalid strategy distribution");
-    }
 
-    /**
-     * Starts training the algorithm by performing the specified number of iterations.
-     */
-    public void train() {
-        for (int i = 0; i < numIterations; i++) {
-            trainIteration();
-        }
-    }
-
-    /**
-     * Trains the algorithm starting from the initial state by performing a single iteration.
-     */
-    private void trainIteration() {
-        GameState initialState = game.getInitialState();
-        trainRecursive(initialState, 1.0);
-        updateRegrets();
-    }
-
-    /**
-     * Recursively performs the training on the game tree, computing utilities and updating regrets.
-     *
-     * @param state  the current game state.
-     * @param weight the weight for the current path.
-     * @return the computed utility.
-     */
-    double trainRecursive(GameState state, double weight) {
-        if (game.isTerminal(state)) {
-            return weight * game.getUtility(state, player.getPlayerIndex());
+        for (E action : strategy.keySet()) {
+            updateStrategySum(infoSet, action, strategy.get(action));
         }
 
-        int playerIndex = state.getCurrentPlayer();
-        InformationSet infoSet = state.getInformationSet(playerIndex);
-        Map<Action, Double> strategy = getStrategy(infoSet);
-        double utility = 0.0;
-
-        for (Map.Entry<Action, Double> entry : strategy.entrySet()) {
-            Action action = entry.getKey();
-            double probability = entry.getValue();
-            GameState nextState = game.getNextState(state, List.of(action));
-            double nextUtility = trainRecursive(nextState, weight * probability);
-            double regret = nextUtility - utility;
-            updateRegret(infoSet, action, regret);
-            utility += probability * nextUtility;
-        }
-
-        return utility;
+        return strategy;
     }
 
     /**
      * Updates the regret for a specific action in an information set.
      *
      * @param infoSet the player's current information set.
-     * @param action  the action taken by the player.
-     * @param regret  the regret value to update.
+     * @param action the action taken by the player.
+     * @param regret the regret value to update.
      */
-    void updateRegret(InformationSet infoSet, Action action, double regret) {
-        Map<Action, Double> regretMap = regretTable.computeIfAbsent(infoSet, k -> new HashMap<>());
-        regretMap.put(action, regretMap.getOrDefault(action, 0.0) + regret);
+    private void updateRegretSum(InformationSet<T, E> infoSet, E action, double regret) {
+        regretTable.computeIfAbsent(infoSet, k -> new HashMap<>()).merge(action, regret, Double::sum);
     }
 
     /**
-     * Updates the strategies for all information sets based on regret and weight.
+     * Updates the strategy for a specific action in an information set.
+     *
+     * @param infoSet the player's current information set.
+     * @param action the action taken by the player.
+     * @param probability the regret value to update.
      */
-    void updateRegrets() {
-        for (Map.Entry<InformationSet, Map<Action, Double>> entry : regretTable.entrySet()) {
-            InformationSet infoSet = entry.getKey();
-            Map<Action, Double> regretMap = entry.getValue();
-            Map<Action, Double> strategy = getStrategy(infoSet);
-            double sumRegrets = regretMap.values().stream().mapToDouble(Double::doubleValue).sum();
-            double normalizationFactor = Math.max(sumRegrets, 1.0);
-
-            for (Map.Entry<Action, Double> actionEntry : regretMap.entrySet()) {
-                Action action = actionEntry.getKey();
-                double regret = actionEntry.getValue();
-                double newWeight = (1 - regretMatchingWeight) * strategy.get(action) + regretMatchingWeight * regret / normalizationFactor;
-                strategy.put(action, newWeight);
-            }
-        }
+    private void updateStrategySum(InformationSet<T, E> infoSet, E action, double probability) {
+        strategyTable.computeIfAbsent(infoSet, k -> new HashMap<>()).merge(action, probability, Double::sum);
     }
 
     /**
@@ -214,7 +214,7 @@ public class CFRMAlgorithm implements Algorithm {
      *
      * @return the regret table.
      */
-    public Map<InformationSet, Map<Action, Double>> getRegretTable() {
+    public Map<InformationSet<T, E>, Map<E, Double>> getRegretTable() {
         return regretTable;
     }
 }

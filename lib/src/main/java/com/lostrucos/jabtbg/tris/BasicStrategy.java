@@ -1,11 +1,11 @@
 package com.lostrucos.jabtbg.tris;
 
-import com.lostrucos.jabtbg.core.UtilityStrategy;
+import com.lostrucos.jabtbg.core.Strategy;
 
 import java.util.List;
 
 // Strategia di base: considera solo la vittoria/sconfitta
-public class BasicUtilityStrategy implements UtilityStrategy<TrisGameState, TrisAction> {
+public class BasicStrategy implements Strategy<TrisGameState, TrisAction> {
     @Override
     public double calculateUtility(TrisGameState state, int playerIndex) {
         int winner = state.checkForWinner();
